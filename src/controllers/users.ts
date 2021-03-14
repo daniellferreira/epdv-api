@@ -14,9 +14,11 @@ export class UserController {
   ): Promise<void> {
     try {
       const newUser = await this.service.create(req.body)
+      console.log('test')
       res.status(201).send(newUser)
     } catch (err) {
       next(err)
     }
   }
+
 }
