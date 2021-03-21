@@ -5,6 +5,7 @@ import {
   InternalStatusCodes,
   ErrorCause,
   InternalError,
+  UserError,
 } from '@src/util/errors'
 
 interface ErrorResponse {
@@ -26,6 +27,11 @@ const detailErrorByType = new Map<string, ErrorResponse>(
     },
     ValidationError: validationError,
     MongoError: validationError,
+    CastError: {
+      cause: 'RECORD_NOTFOUND',
+      message: '',
+      status: UserStatusCodes.NotFound,
+    },
   })
 )
 
@@ -47,9 +53,26 @@ export const ErrorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
-  const { cause, status, message }: ErrorResponse =
+  const error: ErrorResponse =
     detailErrorByType.get(err.name) ||
     (detailErrorByType.get('internal') as ErrorResponse)
+
+  if (err instanceof UserError) {
+    if (err.statusCode) {
+      error.status = err.statusCode
+    }
+
+    if (err.message) {
+      error.message = err.message
+    }
+
+    if (err.cause) {
+      error.cause = err.cause
+    }
+  }
+
+  const { status, cause } = error
+  let { message } = error
 
   const details = new Map<string, string>()
   if (err instanceof mongoose.Error.ValidationError && err.errors) {
@@ -67,11 +90,14 @@ export const ErrorHandler = (
       details.set(fieldName, errorMessage)
     })
   }
+  if (err instanceof mongoose.Error.CastError) {
+    message = `Record not found with ${err.path.replace('_', '')}: ${err.value}`
+  }
 
   res.status(status).json({
     message,
     cause,
-    errors: Object.fromEntries(details),
+    errors: details.size > 0 ? Object.fromEntries(details) : undefined,
     original: process.env.NODE_ENV === 'dev' ? err : undefined,
   })
 }

@@ -2,7 +2,6 @@ export enum UserStatusCodes {
   BadRequest = 400,
   Unauthorized = 401,
   NotFound = 404,
-  Unique = 409,
   Semantic = 422,
 }
 export enum InternalStatusCodes {
@@ -12,7 +11,6 @@ export type ErrorCause =
   | 'VALIDATION_ERROR'
   | 'RECORD_NOTFOUND'
   | 'ROUTE_NOTFOUND'
-  | 'UNIQUE_RECORD'
 
 export class InternalError extends Error {
   constructor(
