@@ -28,7 +28,7 @@ describe('Users functional tests', () => {
 
       await global.testRequest.post('/users').send(newUser)
       const response = await global.testRequest.post('/users').send(newUser)
-      expect(response.status).toBe(422)
+      expect(response.status).toBe(422) //409
       expect(response.body).toEqual({
         cause: 'VALIDATION_ERROR',
         errors: {
@@ -95,6 +95,19 @@ describe('Users functional tests', () => {
     })
   })
 
+  it('Should not get user if email not found', async () => {
+    let myEmail = 'mail@mail.com'
+    const response = await global.testRequest
+      .post('/users/authenticate')
+      .send({ email: myEmail, password: '1234' })
+
+    expect(response.status).toBe(404)
+    expect(response.body).toEqual({
+      cause: 'RECORD_NOTFOUND',
+      message: `Record not found with email: ${myEmail}`,
+    })
+  })
+
   describe('When listing the users', () => {
     beforeEach(async () => {
       await User.deleteMany()
@@ -153,6 +166,47 @@ describe('Users functional tests', () => {
         ...responseCreate.body,
         name: 'Jane Doe',
         updatedAt: responseEdit.body.updatedAt,
+      })
+    })
+  })
+
+  describe('when authenticating a user', () => {
+    it('should generate a token for a valid user', async () => {
+      let pwd = 'test123456'
+      const newUser = {
+        name: 'John Doe',
+        email: 'john@mail.com',
+      }
+
+      const responseCreate = await global.testRequest
+        .post('/users')
+        .send({ ...newUser, password: pwd })
+
+      const responseAuth = await global.testRequest
+        .post('/users/authenticate')
+        .send({ email: newUser.email, password: pwd })
+      expect(responseAuth.body).toEqual(
+        expect.objectContaining({ token: expect.any(String) })
+      )
+    })
+
+    it('Should not get user if password does not match', async () => {
+      const newUser = {
+        name: 'John Doe',
+        email: 'john@mail.com',
+      }
+      const responseCreate = await global.testRequest
+        .post('/users')
+        .send({ ...newUser, password: 'test123456' })
+
+      const response = await global.testRequest
+        .post('/users/authenticate')
+        .send({ email: newUser.email, password: 'different password' })
+
+      expect(response.status).toBe(401)
+      expect(response.body).toEqual({
+        cause: 'UNAUTHORIZED',
+        message: `Invalid password`,
       })
     })
   })
