@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { Server } from '@overnightjs/core'
 import bodyParser from 'body-parser'
-import { Application } from 'express'
+import { Application, static as staticExpress } from 'express'
 import './util/module-alias'
 import * as database from '@src/util/database'
 import { Server as HttpServer } from 'http'
@@ -40,10 +40,15 @@ export class SetupServer extends Server {
     await database.connect()
   }
 
+  private setupDoc(): void {
+    this.app.use(staticExpress(__dirname + '/docs'))
+  }
+
   public async init(): Promise<void> {
     this.setupExpress()
     await this.setupControllers()
     await this.setupDatabase()
+    this.setupDoc()
   }
 
   public start(): void {
