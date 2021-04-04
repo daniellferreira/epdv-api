@@ -11,6 +11,7 @@ export type ErrorCause =
   | 'VALIDATION_ERROR'
   | 'RECORD_NOTFOUND'
   | 'ROUTE_NOTFOUND'
+  | 'UNAUTHORIZED'
 
 export class InternalError extends Error {
   constructor(

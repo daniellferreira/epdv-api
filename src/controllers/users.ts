@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
 import { UsersService } from '@src/services/users'
+import AuthService from '@src/lib/auth'
 
 interface GetParams {
   id: string
+  email: string
 }
 
 @Controller('users')
@@ -38,6 +40,20 @@ export class UserController {
     }
   }
 
+  @Get(':email')
+  public async getByEmail(
+    req: Request<GetParams>,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const user = await this.service.getByEmail(req.params.email)
+      res.status(200).send(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+
   @Get('')
   public async list(
     req: Request,
@@ -61,6 +77,25 @@ export class UserController {
     try {
       const user = await this.service.edit(req.params.id, req.body)
       res.status(200).send(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  @Post('authenticate')
+  public async authenticate(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> {
+    try {
+      const user = await this.service.getByEmail(req.body.email)
+
+      await AuthService.comparePasswords(req.body.password, user.password)
+
+      const token = AuthService.generateToken({ user })
+
+      return res.send({ ...user, ...{ token } })
     } catch (err) {
       next(err)
     }
