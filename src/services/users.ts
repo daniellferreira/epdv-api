@@ -21,6 +21,20 @@ export class UsersService {
     return user
   }
 
+  public async getByEmail(email: string): Promise<User> {
+    const user = await User.findOne({ email: email })
+
+    if (!user) {
+      throw new UserError(
+        `Record not found with email: ${email}`,
+        UserStatusCodes.NotFound,
+        'RECORD_NOTFOUND'
+      )
+    }
+
+    return user
+  }
+
   public list(): Promise<User[]> {
     return User.find()
   }

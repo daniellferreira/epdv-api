@@ -1,3 +1,4 @@
+import AuthService from '@src/lib/auth'
 import mongoose, { Document, Model } from 'mongoose'
 
 export interface User {
@@ -29,5 +30,18 @@ const Schema = new mongoose.Schema(
 )
 
 Schema.index({ email: 1 }, { unique: true })
+
+Schema.pre<UserModel>('save', async function (): Promise<void> {
+  if (!this.password || !this.isModified('password')) {
+    return
+  }
+
+  try {
+    const hashedPassword = await AuthService.hashPassword(this.password)
+    this.password = hashedPassword
+  } catch (err) {
+    console.error(`Error hashing the password for the user ${this.name}`)
+  }
+})
 
 export const User: Model<UserModel> = mongoose.model('User', Schema)
