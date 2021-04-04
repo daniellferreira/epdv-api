@@ -13,6 +13,7 @@ _Windows:_
 ## Documentação da API:
 
 A documentação está disponível na rota inicial da aplicação, por padrão: _http://localhost:3000/_
+
 Usamos o software [Insomnia](https://insomnia.rest/ 'Insomnia') como software de gestão e testes da API, é essencial que tenha ele instalado para realizar as atualizações na documentação.
 
 ##### Para importar documentação (possibilitando testes e edição):
