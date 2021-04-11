@@ -17,11 +17,11 @@ describe('AuthMiddleware', () => {
     //   .post('/users/authenticate')
     //   .send({ email: newUser.email, password: 'test123456' })
 
-    // const jwtToken = responseAuth.body.token
+    // const jwtToken = responseAuth.body
     const jwtToken = AuthService.generateToken({ data: 'fake' })
     const reqFake = {
       headers: {
-        'x-access-token': jwtToken,
+        'auth-token': jwtToken['auth-token'],
       },
     }
     const resFake = {}
@@ -34,7 +34,7 @@ describe('AuthMiddleware', () => {
   it('should return UNAUTHORIZED if there is a problem on the token verification', () => {
     const reqFake = {
       headers: {
-        'x-access-token': 'invalid token',
+        'auth-token': 'invalid token',
       },
     }
     const sendMock = jest.fn()

@@ -95,7 +95,7 @@ export class UserController {
 
       const token = AuthService.generateToken({ user })
 
-      return res.send({ ...user, ...{ token } })
+      return res.send(token)
     } catch (err) {
       next(err)
     }
