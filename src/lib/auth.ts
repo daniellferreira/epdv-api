@@ -8,6 +8,10 @@ export interface DecodedUser extends Omit<User, '_id'> {
   id: string
 }
 
+export interface Token {
+  'auth-token': string
+}
+
 export default class AuthService {
   public static async hashPassword(
     password: string,
@@ -29,10 +33,12 @@ export default class AuthService {
     }
   }
 
-  public static generateToken(payload: object): string {
-    return jwt.sign(payload, config.get('App.auth.key'), {
-      expiresIn: config.get('App.auth.tokenExpiresIn'),
-    })
+  public static generateToken(payload: object): Token {
+    return {
+      'auth-token': jwt.sign(payload, config.get('App.auth.key'), {
+        expiresIn: config.get('App.auth.tokenExpiresIn'),
+      }),
+    }
   }
 
   public static decodeToken(token: string): DecodedUser {
