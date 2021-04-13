@@ -98,7 +98,7 @@ describe('Users functional tests', () => {
   it('Should not get user if email not found', async () => {
     let myEmail = 'mail@mail.com'
     const response = await global.testRequest
-      .post('/users/authenticate')
+      .post('/auth/authenticate')
       .send({ email: myEmail, password: '1234' })
 
     expect(response.status).toBe(404)
@@ -183,10 +183,10 @@ describe('Users functional tests', () => {
         .send({ ...newUser, password: pwd })
 
       const responseAuth = await global.testRequest
-        .post('/users/authenticate')
+        .post('/auth/authenticate')
         .send({ email: newUser.email, password: pwd })
       expect(responseAuth.body).toEqual(
-        expect.objectContaining({ token: expect.any(String) })
+        expect.objectContaining({ 'auth-token': expect.any(String) })
       )
     })
 
@@ -200,7 +200,7 @@ describe('Users functional tests', () => {
         .send({ ...newUser, password: 'test123456' })
 
       const response = await global.testRequest
-        .post('/users/authenticate')
+        .post('/auth/authenticate')
         .send({ email: newUser.email, password: 'different password' })
 
       expect(response.status).toBe(401)
