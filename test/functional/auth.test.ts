@@ -14,7 +14,7 @@ describe('AuthMiddleware', () => {
     //   .send({ ...newUser, password: 'test123456' })
 
     // const responseAuth = await global.testRequest
-    //   .post('/auth')
+    //   .post('/auth/authenticate')
     //   .send({ email: newUser.email, password: 'test123456' })
 
     // const jwtToken = responseAuth.body
