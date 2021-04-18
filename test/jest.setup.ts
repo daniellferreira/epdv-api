@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import { SetupServer } from '@src/server'
 import supertest from 'supertest'
 

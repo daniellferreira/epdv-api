@@ -1,1 +1,0 @@
-Arquivos nesta pasta concentram o ponto de entrada da API, recebem os requests, chamam o servico responsavel pela logica de negocio e retornam para o cliente

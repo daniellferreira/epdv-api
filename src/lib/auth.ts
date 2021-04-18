@@ -1,6 +1,6 @@
 import { UserError, UserStatusCodes } from '@src/util/errors'
 import bcrypt from 'bcrypt'
-import config from 'config'
+import config from '@src/services/config'
 import jwt from 'jsonwebtoken'
 import { User } from '@src/models/user'
 
@@ -35,13 +35,13 @@ export default class AuthService {
 
   public static generateToken(payload: object): Token {
     return {
-      'auth-token': jwt.sign(payload, config.get('App.auth.key'), {
-        expiresIn: config.get('App.auth.tokenExpiresIn'),
+      'auth-token': jwt.sign(payload, config.auth.key, {
+        expiresIn: config.auth.tokenExpiresIn,
       }),
     }
   }
 
   public static decodeToken(token: string): DecodedUser {
-    return jwt.verify(token, config.get('App.auth.key')) as DecodedUser
+    return jwt.verify(token, config.auth.key) as DecodedUser
   }
 }

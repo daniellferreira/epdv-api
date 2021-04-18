@@ -1,1 +1,0 @@
-Nesta pasta ficam armazenados os servicos que são os responsaveis por realizar a regra de negocio da aplicacao

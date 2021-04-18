@@ -1,11 +1,9 @@
-import config, { IConfig } from 'config'
+import config from '@src/services/config'
 import mongoose, { Mongoose } from 'mongoose'
-
-const dbConfig: IConfig = config.get('App.db')
 
 export const connect = async (): Promise<Mongoose> => {
   mongoose.set('debug', process.env.NODE_ENV === 'dev')
-  return await mongoose.connect(dbConfig.get('connectionString'), {
+  return await mongoose.connect(config.db.connectionString, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
