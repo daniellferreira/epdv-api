@@ -81,23 +81,4 @@ export class UserController {
       next(err)
     }
   }
-
-  @Post('authenticate')
-  public async authenticate(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<any> {
-    try {
-      const user = await this.service.getByEmail(req.body.email)
-
-      await AuthService.comparePasswords(req.body.password, user.password)
-
-      const token = AuthService.generateToken({ user })
-
-      return res.send({ ...user, ...{ token } })
-    } catch (err) {
-      next(err)
-    }
-  }
 }
