@@ -1,1 +1,0 @@
-Nesta pasta são armazenadas todas as entidades da app
