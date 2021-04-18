@@ -1,5 +1,6 @@
 import AuthService from '@src/lib/auth'
-import mongoose, { Document, Model } from 'mongoose'
+import mongoose, { Document, Model, model } from 'mongoose'
+import mongoTenant from 'mongo-tenant'
 
 export interface User {
   readonly id?: string
@@ -8,7 +9,10 @@ export interface User {
   password: string
 }
 
-interface UserModel extends Omit<User, 'id'>, Document {}
+interface IUserDocument extends Omit<User, 'id'>, Document {}
+interface IUserModel extends Model<IUserDocument> {
+  byTenant(tenantId: string): IUserModel
+}
 
 const Schema = new mongoose.Schema(
   {
@@ -29,9 +33,11 @@ const Schema = new mongoose.Schema(
   }
 )
 
-Schema.index({ email: 1 }, { unique: true })
+Schema.index({ email: 1 }, { unique: true, preserveUniqueKey: true })
 
-Schema.pre<UserModel>('save', async function (): Promise<void> {
+Schema.plugin(mongoTenant)
+
+Schema.pre<IUserDocument>('save', async function (): Promise<void> {
   if (!this.password || !this.isModified('password')) {
     return
   }
@@ -44,4 +50,4 @@ Schema.pre<UserModel>('save', async function (): Promise<void> {
   }
 })
 
-export const User: Model<UserModel> = mongoose.model('User', Schema)
+export const User: IUserModel = model<IUserDocument, IUserModel>('User', Schema)
