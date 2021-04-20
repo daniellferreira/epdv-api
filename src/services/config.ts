@@ -12,7 +12,9 @@ interface Config {
 const config: Config = {
   port: parseInt(process.env.PORT as string),
   db: {
-    connectionString: process.env.DB_CONNECTIONSTRING as string,
+    connectionString:
+      (process.env.DB_CONNECTIONSTRING as string) ||
+      'mongodb://localhost:27017/epdv-local',
   },
   auth: {
     key: process.env.AUTH_KEY as string,
