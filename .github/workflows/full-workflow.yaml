@@ -4,7 +4,7 @@ on: ['push']
 
 jobs:
   build:
-    run-os: ubuntu-latest
+    runs-os: ubuntu-latest
 
     strategy:
       matrix:
