@@ -6,6 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      DB_CONNECTIONSTRING: mongodb://localhost:27017/epdv-local
+      AUTH_KEY: auth-key
+      AUTH_TOKENEXPIRATION: 86400
+
     strategy:
       matrix:
         node-version: [14.x]
