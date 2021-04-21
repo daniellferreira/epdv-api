@@ -1,6 +1,6 @@
 import { UserError, UserStatusCodes } from '@src/util/errors'
 import bcrypt from 'bcrypt'
-import config from '@src/services/config'
+import { config } from '@src/services/config'
 import jwt from 'jsonwebtoken'
 import { User } from '@src/models/user'
 

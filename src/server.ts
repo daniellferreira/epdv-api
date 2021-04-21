@@ -6,12 +6,13 @@ import './util/module-alias'
 import * as database from '@src/util/database'
 import { Server as HttpServer } from 'http'
 import { ErrorHandler } from '@src/lib/errorHandler'
+import { config, Environment } from '@src/services/config'
 
 export class SetupServer extends Server {
   private server!: HttpServer
 
   constructor(private port = 3000) {
-    super(process.env.NODE_ENV === 'dev')
+    super(config.environment === Environment.DEVELOPMENT)
   }
 
   private setupExpress(): void {
