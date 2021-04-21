@@ -7,7 +7,7 @@ import AuthService from '@src/lib/auth'
 export class AuthController {
   constructor(private service = new UsersService()) {}
 
-  @Post('')
+  @Post('token')
   public async authenticate(
     req: Request,
     res: Response,
