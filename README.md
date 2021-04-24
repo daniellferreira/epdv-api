@@ -4,11 +4,7 @@
 
 Para executar a API em modo de **desenvolvimento** você deve executar o seguinte comando:
 
-_Linux:_
 `npm run start:dev`
-
-_Windows:_
-`npm run start:dev-win`
 
 ## Documentação da API:
 
