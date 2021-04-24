@@ -4,7 +4,7 @@ import { UsersService } from '@src/services/users'
 import AuthService from '@src/lib/auth'
 
 @Controller('')
-export class AuthController {
+export class HealthCheckerController {
   @Get('ping')
   public async ping(
     req: Request,
