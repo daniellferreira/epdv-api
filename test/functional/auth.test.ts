@@ -3,21 +3,6 @@ import { authMiddleware } from '@src/middlewares/auth'
 
 describe('AuthMiddleware', () => {
   it('should verify a JWT token and call the next middleware', async () => {
-    // await User.deleteMany()
-    // const newUser = {
-    //   name: 'John Doe',
-    //   email: 'john@mail.com',
-    // }
-
-    // const response = await global.testRequest
-    //   .post('/users')
-    //   .send({ ...newUser, password: 'test123456' })
-
-    // const responseAuth = await global.testRequest
-    //   .post('/auth')
-    //   .send({ email: newUser.email, password: 'test123456' })
-
-    // const jwtToken = responseAuth.body
     const jwtToken = AuthService.generateToken({ data: 'fake' })
     const reqFake = {
       headers: {

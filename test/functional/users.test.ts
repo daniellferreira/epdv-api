@@ -14,7 +14,7 @@ describe('Users functional tests', () => {
 
       const response = await global.testRequest
         .post('/users')
-        .send({ ...newUser, password: 'test123456' })
+        .send({ ...newUser, password: 'test123456', tenantId: 1 })
       expect(response.status).toBe(201)
       expect(response.body).toEqual(expect.objectContaining(newUser))
     })
@@ -24,11 +24,12 @@ describe('Users functional tests', () => {
         name: 'Jane Doe',
         email: 'jane@mail.com',
         password: 'jane123456',
+        tenantId: '1',
       }
 
       await global.testRequest.post('/users').send(newUser)
       const response = await global.testRequest.post('/users').send(newUser)
-      expect(response.status).toBe(422) //409
+      expect(response.status).toBe(422)
       expect(response.body).toEqual({
         cause: 'VALIDATION_ERROR',
         errors: {
@@ -45,6 +46,7 @@ describe('Users functional tests', () => {
         name: 'John Doe',
         email: 'john2@mail.com',
         password: 'test123456',
+        tenantId: '1',
       }
 
       const responseCreate = await global.testRequest
@@ -52,7 +54,13 @@ describe('Users functional tests', () => {
         .send(newUser)
 
       const { name, email } = newUser
-      const { id, createdAt, updatedAt } = responseCreate.body
+      const {
+        id,
+        createdAt,
+        updatedAt,
+        tenantId,
+        isAdmin,
+      } = responseCreate.body
 
       const responseGet = await global.testRequest.get(`/users/${id}`).send()
 
@@ -61,6 +69,8 @@ describe('Users functional tests', () => {
         name,
         email,
         id,
+        tenantId,
+        isAdmin,
         createdAt,
         updatedAt,
       })
@@ -98,7 +108,7 @@ describe('Users functional tests', () => {
   it('Should not get user if email not found', async () => {
     let myEmail = 'mail@mail.com'
     const response = await global.testRequest
-      .post('/auth')
+      .post('/auth/token')
       .send({ email: myEmail, password: '1234' })
 
     expect(response.status).toBe(404)
@@ -118,12 +128,14 @@ describe('Users functional tests', () => {
         name: 'John Doe',
         email: 'john@mail.com',
         password: 'test123456',
+        tenantId: '1',
       }
 
       let user2 = {
         name: 'Jane Doe',
         email: 'jane@mail.com',
         password: 'test123456',
+        tenantId: '1',
       }
 
       const respUser1 = await global.testRequest.post('/users').send(user1)
@@ -151,6 +163,7 @@ describe('Users functional tests', () => {
       const newUser = {
         name: 'John Doe',
         email: 'john2@mail.com',
+        tenantId: '1',
       }
 
       const responseCreate = await global.testRequest
@@ -176,6 +189,7 @@ describe('Users functional tests', () => {
       const newUser = {
         name: 'John Doe',
         email: 'john@mail.com',
+        tenantId: '1',
       }
 
       const responseCreate = await global.testRequest
@@ -183,7 +197,7 @@ describe('Users functional tests', () => {
         .send({ ...newUser, password: pwd })
 
       const responseAuth = await global.testRequest
-        .post('/auth')
+        .post('/auth/token')
         .send({ email: newUser.email, password: pwd })
       expect(responseAuth.body).toEqual(
         expect.objectContaining({ 'auth-token': expect.any(String) })
@@ -194,13 +208,14 @@ describe('Users functional tests', () => {
       const newUser = {
         name: 'John Doe',
         email: 'john@mail.com',
+        tenantId: '1',
       }
       const responseCreate = await global.testRequest
         .post('/users')
         .send({ ...newUser, password: 'test123456' })
 
       const response = await global.testRequest
-        .post('/auth')
+        .post('/auth/token')
         .send({ email: newUser.email, password: 'different password' })
 
       expect(response.status).toBe(401)

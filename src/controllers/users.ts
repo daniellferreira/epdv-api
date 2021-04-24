@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
 import { UsersService } from '@src/services/users'
-import AuthService from '@src/lib/auth'
 
 interface GetParams {
   id: string
