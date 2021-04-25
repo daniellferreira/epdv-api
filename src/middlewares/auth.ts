@@ -20,8 +20,7 @@ export function authMiddleware(
     )
     res.status?.(erro.statusCode).send({
       cause: erro.cause,
-      code: erro.statusCode,
-      menssage: erro.message,
+      message: erro.message,
     })
   }
 }

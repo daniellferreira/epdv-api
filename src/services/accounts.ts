@@ -6,6 +6,10 @@ export class AccountService {
     return account.save()
   }
 
+  public async get(id: string): Promise<Account> {
+    return Account.findById(id)
+  }
+
   public list(): Promise<Account[]> {
     return Account.find()
   }

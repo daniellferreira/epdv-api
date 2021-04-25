@@ -32,13 +32,12 @@ describe('AuthMiddleware', () => {
     authMiddleware(reqFake, resFake as object, nextFake)
     expect(resFake.status).toHaveBeenCalledWith(401)
     expect(sendMock).toHaveBeenCalledWith({
-      code: 401,
       cause: 'UNAUTHORIZED',
-      menssage: 'jwt malformed',
+      message: 'jwt malformed',
     })
   })
 
-  it('should return UNAUTHORIZED if theres no token', async () => {
+  it('should return UNAUTHORIZED if there is no token', async () => {
     const reqFake = {
       headers: {},
     }
@@ -54,9 +53,8 @@ describe('AuthMiddleware', () => {
 
     expect(resFake.status).toHaveBeenCalledWith(401)
     expect(sendMock).toHaveBeenCalledWith({
-      code: 401,
       cause: 'UNAUTHORIZED',
-      menssage: 'jwt must be provided',
+      message: 'jwt must be provided',
     })
   })
 })

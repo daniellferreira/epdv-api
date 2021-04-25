@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Put } from '@overnightjs/core'
+import { ClassMiddleware, Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
 import { UsersService } from '@src/services/users'
+import { authMiddleware } from '@src/middlewares/auth'
 
 interface GetParams {
   id: string
   email: string
 }
 
+@ClassMiddleware(authMiddleware)
 @Controller('users')
 export class UserController {
   constructor(private service = new UsersService()) {}
@@ -18,7 +20,10 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const newUser = await this.service.create(req.body)
+      const newUser = await this.service.create({
+        ...req.body,
+        ...{ account: req.decoded?.user.account },
+      })
       res.status(201).send(newUser)
     } catch (err) {
       next(err)

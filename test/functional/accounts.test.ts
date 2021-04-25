@@ -17,6 +17,7 @@ describe('Accounts functional tests', () => {
       const response = await global.testRequest
         .post('/accounts')
         .send({ ...newAccount, password: 'test123456' })
+
       expect(response.status).toBe(201)
       expect(response.body).toEqual(expect.objectContaining(newAccount))
     })

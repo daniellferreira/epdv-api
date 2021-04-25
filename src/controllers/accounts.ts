@@ -3,6 +3,10 @@ import { NextFunction, Request, Response } from 'express'
 import { AccountService } from '@src/services/accounts'
 import { UsersService } from '@src/services/users'
 
+interface GetParams {
+  id: string
+}
+
 @Controller('accounts')
 export class AccountController {
   constructor(
@@ -17,20 +21,26 @@ export class AccountController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const account = await this.service.getLast()
-      let nextTenantId = ''
-      if (account.length > 0) {
-        nextTenantId = String(Number(account[0].tenantId) + 1)
+      const lastAccount = await this.service.getLast()
+      let nextTenantId = 1
+      if (lastAccount.length > 0) {
+        nextTenantId = lastAccount[0].tenantId + 1
       } else {
-        nextTenantId = '1'
+        nextTenantId = 1
       }
 
-      const data = { ...req.body, tenantId: nextTenantId, isAdmin: true }
-      const newUser = await this.serviceUsers.create(data)
-
+      // TODO: se der erro na criação do usuário remover account ou fazer algo para tratar
       const newAccount = await this.service.create({
         tenantId: nextTenantId,
       })
+
+      const data = {
+        ...req.body,
+        isAdmin: true,
+        account: newAccount.id,
+      }
+
+      const newUser = await this.serviceUsers.create(data)
 
       res.status(201).send(newUser)
     } catch (err) {
@@ -52,14 +62,14 @@ export class AccountController {
     }
   }
 
-  @Get('last')
-  public async last(
-    req: Request,
+  @Get(':id')
+  public async get(
+    req: Request<GetParams>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const account = await this.service.getLast()
+      const account = await this.service.get(req.params.id)
       res.status(200).send(account)
     } catch (err) {
       next(err)
