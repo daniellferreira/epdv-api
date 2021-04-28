@@ -1,11 +1,7 @@
-import { Controller, Get, Post } from '@overnightjs/core'
+import { Controller, Post } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
 import { AccountService } from '@src/services/accounts'
 import { UsersService } from '@src/services/users'
-
-interface GetParams {
-  id: string
-}
 
 @Controller('accounts')
 export class AccountController {
@@ -43,34 +39,6 @@ export class AccountController {
       const newUser = await this.serviceUsers.create(data)
 
       res.status(201).send(newUser)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  @Get('')
-  public async list(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const accounts = await this.service.list()
-      res.status(200).send(accounts)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  @Get(':id')
-  public async get(
-    req: Request<GetParams>,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const account = await this.service.get(req.params.id)
-      res.status(200).send(account)
     } catch (err) {
       next(err)
     }

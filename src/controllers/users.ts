@@ -44,20 +44,6 @@ export class UserController {
     }
   }
 
-  @Get(':email')
-  public async getByEmail(
-    req: Request<GetParams>,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const user = await this.service.getByEmail(req.params.email)
-      res.status(200).send(user)
-    } catch (err) {
-      next(err)
-    }
-  }
-
   @Get('')
   public async list(
     req: Request,
