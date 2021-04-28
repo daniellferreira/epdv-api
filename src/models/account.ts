@@ -2,7 +2,8 @@ import mongoose, { Document, Model, model } from 'mongoose'
 //import mongoTenant from 'mongo-tenant'
 
 export interface Account {
-  tenantId: string
+  tenantId: number
+  id?: string
 }
 
 interface IAccountDocument extends Omit<Account, 'id'>, Document {}
@@ -10,7 +11,7 @@ interface IAccountModel extends Model<IAccountDocument> {}
 
 const Schema = new mongoose.Schema(
   {
-    tenantId: { type: String, required: true },
+    tenantId: { type: Number, required: true },
   },
   {
     toJSON: {

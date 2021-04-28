@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@overnightjs/core'
+import { Controller, Post } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
 import { AccountService } from '@src/services/accounts'
 import { UsersService } from '@src/services/users'
@@ -17,50 +17,28 @@ export class AccountController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const account = await this.service.getLast()
-      let nextTenantId = ''
-      if (account.length > 0) {
-        nextTenantId = String(Number(account[0].tenantId) + 1)
+      const lastAccount = await this.service.getLast()
+      let nextTenantId = 1
+      if (lastAccount.length > 0) {
+        nextTenantId = lastAccount[0].tenantId + 1
       } else {
-        nextTenantId = '1'
+        nextTenantId = 1
       }
 
-      const data = { ...req.body, tenantId: nextTenantId, isAdmin: true }
-      const newUser = await this.serviceUsers.create(data)
-
+      // TODO: se der erro na criação do usuário remover account ou fazer algo para tratar
       const newAccount = await this.service.create({
         tenantId: nextTenantId,
       })
 
+      const data = {
+        ...req.body,
+        isAdmin: true,
+        account: newAccount.id,
+      }
+
+      const newUser = await this.serviceUsers.create(data)
+
       res.status(201).send(newUser)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  @Get('')
-  public async list(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const accounts = await this.service.list()
-      res.status(200).send(accounts)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  @Get('last')
-  public async last(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const account = await this.service.getLast()
-      res.status(200).send(account)
     } catch (err) {
       next(err)
     }

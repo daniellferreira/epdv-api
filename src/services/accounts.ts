@@ -1,13 +1,10 @@
 import { Account } from '@src/models/account'
+import { UserError, UserStatusCodes } from '@src/util/errors'
 
 export class AccountService {
   public create(data: Account): Promise<Account> {
     const account = new Account(data)
     return account.save()
-  }
-
-  public list(): Promise<Account[]> {
-    return Account.find()
   }
 
   public getLast(): Promise<Account[]> {
