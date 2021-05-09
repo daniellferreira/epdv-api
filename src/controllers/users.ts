@@ -30,14 +30,28 @@ export class UserController {
     }
   }
 
-  @Get(':id')
+  @Get('id')
   public async get(
     req: Request<GetParams>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const user = await this.service.get(req.params.id)
+      const user = await this.service.get(req.body.id)
+      res.status(200).send(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  @Get('search')
+  public async search(
+    req: Request<GetParams>,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const user = await this.service.search(req.body.name, req.body.email)
       res.status(200).send(user)
     } catch (err) {
       next(err)

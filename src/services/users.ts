@@ -36,6 +36,15 @@ export class UsersService {
     return user
   }
 
+  public async search(name: string, email: string): Promise<User[]> {
+    const user = await User.find({
+      name: { $regex: name, $options: 'i' },
+      email: { $regex: email, $options: 'i' },
+    })
+
+    return user
+  }
+
   public list(): Promise<User[]> {
     return User.find()
   }
