@@ -1,5 +1,5 @@
 import * as http from 'http'
-import { DecodedUser } from './lib/auth'
+import { DecodedUser } from 'lib/auth'
 
 // module augmentation
 declare module 'express-serve-static-core' {
