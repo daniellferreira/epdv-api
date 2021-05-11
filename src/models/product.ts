@@ -22,7 +22,7 @@ const schema = new mongoose.Schema(
     name: { type: String, required: true },
     images: { type: [String], default: [] },
     categories: { type: [String], default: [] },
-    oldPrice: { type: Number, required: true, min: 0.0 },
+    oldPrice: { type: Number, min: 0.0, default: 0.0 },
     price: { type: Number, required: true, min: 0.0 },
     quantity: { type: Number, required: true, min: 0 },
     description: { type: String, default: null },
