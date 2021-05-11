@@ -110,6 +110,7 @@ describe('Users functional tests', () => {
 
       expect(responseGet.status).toBe(200)
       expect(responseGet.body).toEqual({
+        active: true,
         name,
         email,
         id,
