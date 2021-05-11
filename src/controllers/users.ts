@@ -1,6 +1,6 @@
 import { ClassMiddleware, Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
-import { UsersService } from '@src/services/users'
+import { UsersListFilter, UsersService } from '@src/services/users'
 import { authMiddleware } from '@src/middlewares/auth'
 
 interface GetParams {
@@ -30,28 +30,14 @@ export class UserController {
     }
   }
 
-  @Get('id')
+  @Get(':id')
   public async get(
     req: Request<GetParams>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const user = await this.service.get(req.body.id)
-      res.status(200).send(user)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  @Get('search')
-  public async search(
-    req: Request<GetParams>,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const user = await this.service.search(req.body.name, req.body.email)
+      const user = await this.service.get(req.params.id)
       res.status(200).send(user)
     } catch (err) {
       next(err)
@@ -65,7 +51,10 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const users = await this.service.list()
+      const filter: UsersListFilter = { account: req.decoded?.user.account }
+      const { s } = req.query
+
+      const users = await this.service.list(filter, s as string)
       res.status(200).send(users)
     } catch (err) {
       next(err)
