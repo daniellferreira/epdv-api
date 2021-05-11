@@ -1,11 +1,15 @@
 import { ClassMiddleware, Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
-import { ProductsService } from '@src/services/products'
+import { ProductsListFilter, ProductsService } from '@src/services/products'
 import { authMiddleware } from '@src/middlewares/auth'
+import { ReqListQuery, stringToSort } from '@src/lib/paginate'
 
 interface GetParams {
   id: string
-  email: string
+}
+
+interface ListParams {
+  active: boolean
 }
 
 @ClassMiddleware(authMiddleware)
@@ -51,12 +55,24 @@ export class ProductController {
 
   @Get('')
   public async list(
-    req: Request,
+    req: Request<ListParams, null, null, ReqListQuery>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
     try {
-      const products = await this.service.list(req.decoded?.user.account)
+      const { limit, page, sort, active } = req.query
+      const filter: ProductsListFilter = { account: req.decoded?.user.account }
+
+      if (active != null) {
+        filter.active = active
+      }
+
+      const products = await this.service.list(
+        filter,
+        limit,
+        page,
+        stringToSort(sort)
+      )
 
       res.status(200).send(products)
     } catch (err) {

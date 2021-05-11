@@ -1,5 +1,12 @@
-import { Product } from '@src/models/product'
+import { IProductDocument, Product } from '@src/models/product'
 import { UserError, UserStatusCodes } from '@src/util/errors'
+import { PaginateResult } from 'mongoose'
+import { SortObject } from '@src/lib/paginate'
+
+export interface ProductsListFilter {
+  account: string
+  active?: boolean
+}
 
 export class ProductsService {
   public create(data: Product): Promise<Product> {
@@ -21,8 +28,13 @@ export class ProductsService {
     return product
   }
 
-  public list(account: string): Promise<Product[]> {
-    return Product.find({ account })
+  public list(
+    filter: ProductsListFilter,
+    limit = 10,
+    page = 1,
+    sort: SortObject | undefined
+  ): Promise<PaginateResult<IProductDocument>> {
+    return Product.paginate(filter, { limit, page, sort })
   }
 
   // eslint-disable-next-line

@@ -1,4 +1,5 @@
-import mongoose, { Document, Model, model, Schema } from 'mongoose'
+import mongoose, { Document, model, PaginateModel, Schema } from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 export interface Product {
   readonly id?: string
@@ -7,20 +8,22 @@ export interface Product {
   images: string[]
   categories: string[]
   price: number
+  active: boolean
   quantity: number
   description: string
   especifications: any
   account: string
 }
 
-interface IProductDocument extends Omit<Product, 'id'>, Document {}
-interface IProductModel extends Model<IProductDocument> {}
+export interface IProductDocument extends Omit<Product, 'id'>, Document {}
+type IProductModel = PaginateModel<IProductDocument>
 
 const schema = new mongoose.Schema(
   {
     sku: { type: String, required: true },
     name: { type: String, required: true },
     images: { type: [String], default: [] },
+    active: { type: Boolean, default: true },
     categories: { type: [String], default: [] },
     oldPrice: { type: Number, min: 0.0, default: 0.0 },
     price: { type: Number, required: true, min: 0.0 },
@@ -44,6 +47,8 @@ const schema = new mongoose.Schema(
 schema.index({ account: 1, sku: 1 }, { unique: true })
 schema.index({ account: 1 })
 schema.index({ _id: 1, account: 1 })
+
+schema.plugin(mongoosePaginate)
 
 export const Product: IProductModel = model<IProductDocument, IProductModel>(
   'Product',
