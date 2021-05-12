@@ -7,7 +7,7 @@ export interface UsersListFilter {
 
 export class UsersService {
   public create(data: User): Promise<User> {
-    const user = new User(data)
+    const user = new User(data) 
     return user.save()
   }
 
