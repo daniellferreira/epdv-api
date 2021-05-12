@@ -235,9 +235,123 @@ describe('Users functional tests', () => {
         message: 'jwt must be provided',
       })
     })
+
+    it('should find two created users names contains "doe"', async () => {
+      let user1 = {
+        name: 'John Doe',
+        email: 'john@mail.com',
+        password: 'test123456',
+      }
+
+      let user2 = {
+        name: 'Jane Doe',
+        email: 'jane@mail.com',
+        password: 'test123456',
+      }
+
+      const respUser1 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user1)
+      user1 = respUser1.body
+
+      const respUser2 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user2)
+      user2 = respUser2.body
+
+      const response = await global.testRequest
+        .get('/users/?s=doe')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual([user1, user2])
+    })
+
+    it('should find two created users emails contains "mail"', async () => {
+      let user1 = {
+        name: 'John Doe',
+        email: 'john@mail.com',
+        password: 'test123456',
+      }
+
+      let user2 = {
+        name: 'Jane Doe',
+        email: 'jane@mail.com',
+        password: 'test123456',
+      }
+
+      const respUser1 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user1)
+      user1 = respUser1.body
+
+      const respUser2 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user2)
+      user2 = respUser2.body
+
+      const response = await global.testRequest
+        .get('/users/?s=mail')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual([userMaster, user1, user2])
+    })
+
+    it('should not find created users from another account', async () => {
+      const newAccount = {
+        name: 'Account test2',
+        email: 'AccountTest2@mail.com',
+      }
+      await global.testRequest
+        .post('/accounts')
+        .send({ ...newAccount, password: 'test123456' })
+
+      let user1 = {
+        name: 'John Doe',
+        email: 'john@mail.com',
+        password: 'test123456',
+      }
+
+      const respUser1 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user1)
+      user1 = respUser1.body
+
+      const response = await global.testRequest
+        .get('/users/')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual([userMaster, user1])
+    })
   })
 
-  describe('When listing the users', () => {
+  describe('When editing the users', () => {
     it('should edit a created user', async () => {
       const newUser = {
         name: 'John Doe',

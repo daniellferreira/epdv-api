@@ -1,6 +1,6 @@
 import { ClassMiddleware, Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
-import { UsersService } from '@src/services/users'
+import { UsersListFilter, UsersService } from '@src/services/users'
 import { authMiddleware } from '@src/middlewares/auth'
 
 interface GetParams {
@@ -51,7 +51,10 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const users = await this.service.list()
+      const filter: UsersListFilter = { account: req.decoded?.user.account }
+      const { s } = req.query
+
+      const users = await this.service.list(filter, s as string)
       res.status(200).send(users)
     } catch (err) {
       next(err)
