@@ -1,6 +1,10 @@
 import { User } from '@src/models/user'
 import { UserError, UserStatusCodes } from '@src/util/errors'
 
+export interface UsersListFilter {
+  account: string
+}
+
 export class UsersService {
   public create(data: User): Promise<User> {
     const user = new User(data)
@@ -36,8 +40,16 @@ export class UsersService {
     return user
   }
 
-  public list(): Promise<User[]> {
-    return User.find()
+  public async list(filter: UsersListFilter, s = ''): Promise<User[]> {
+    const user = await User.find({
+      account: filter.account,
+      $or: [
+        { name: { $regex: s, $options: 'i' } },
+        { email: { $regex: s, $options: 'i' } },
+      ],
+    })
+
+    return user
   }
 
   // eslint-disable-next-line
