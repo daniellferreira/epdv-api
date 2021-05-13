@@ -1,19 +1,21 @@
-import { User } from '@src/models/user'
+import { IUserDocument, User } from '@src/models/user'
 import { UserError, UserStatusCodes } from '@src/util/errors'
+import { PaginateResult } from 'mongoose'
+import { SortObject } from '@src/lib/paginate'
 
 export interface UsersListFilter {
   account: string
+  active?: boolean
 }
 
 export class UsersService {
   public create(data: User): Promise<User> {
-    const user = new User(data) 
+    const user = new User(data)
     return user.save()
   }
 
-  public async get(id: string): Promise<User> {
-    // const user = await User.byTenant('1').findById(id)
-    const user = await User.findById(id)
+  public async get(filter: UsersListFilter, id: string): Promise<User> {
+    const user = await User.findOne({ ...filter, _id: id })
 
     if (!user) {
       throw new UserError(
@@ -40,21 +42,35 @@ export class UsersService {
     return user
   }
 
-  public async list(filter: UsersListFilter, s = ''): Promise<User[]> {
-    const user = await User.find({
-      account: filter.account,
-      $or: [
-        { name: { $regex: s, $options: 'i' } },
-        { email: { $regex: s, $options: 'i' } },
-      ],
-    })
+  public async list(
+    filter: UsersListFilter,
+    s = '',
+    limit = 10,
+    page = 1,
+    sort: SortObject | undefined
+  ): Promise<PaginateResult<IUserDocument>> {
+    if (sort && !(sort['name'] || sort['email'] || sort['createdAt'])) {
+      sort = undefined
+    }
 
-    return user
+    return User.paginate(
+      User.find({
+        ...filter,
+        $or: [
+          { name: { $regex: s, $options: 'i' } },
+          { email: { $regex: s, $options: 'i' } },
+        ],
+      }),
+      { limit, page, sort }
+    )
   }
 
-  // eslint-disable-next-line
-  public async edit(id: string, data: any): Promise<User> {
-    const user = await User.findById(id)
+  public async edit(
+    filter: UsersListFilter,
+    id: string,
+    data: any
+  ): Promise<User> {
+    const user = await User.findOne({ ...filter, _id: id })
 
     if (!user) {
       throw new UserError(
