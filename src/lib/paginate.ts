@@ -20,6 +20,7 @@ export function stringToSort(sort: string): SortObject | undefined {
 
   for (const fieldSort of fields) {
     const [field, way = 'asc'] = fieldSort.split(',')
+
     if (way === 'asc' || way === 'desc') {
       sortObj[field] = way
     }
