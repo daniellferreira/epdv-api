@@ -13,7 +13,7 @@ export function authMiddleware(
     req.decoded = decoded
     next()
   } catch (err) {
-    let erro = new UserError(
+    const erro = new UserError(
       err.message,
       UserStatusCodes.Unauthorized,
       'UNAUTHORIZED'

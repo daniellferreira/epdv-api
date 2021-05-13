@@ -7,12 +7,11 @@ export interface UsersListFilter {
 
 export class UsersService {
   public create(data: User): Promise<User> {
-    const user = new User(data) 
+    const user = new User(data)
     return user.save()
   }
 
   public async get(id: string): Promise<User> {
-    // const user = await User.byTenant('1').findById(id)
     const user = await User.findById(id)
 
     if (!user) {

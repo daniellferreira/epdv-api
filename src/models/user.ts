@@ -5,6 +5,7 @@ export interface User {
   readonly id?: string
   name: string
   email: string
+  active: boolean
   password: string
   isAdmin: boolean
   account: string
@@ -17,6 +18,7 @@ const schema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
+    active: { type: Boolean, default: true },
     password: { type: String, required: true },
     isAdmin: { type: String, required: true, default: false },
     account: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
