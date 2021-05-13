@@ -12,7 +12,6 @@ export class UsersService {
   }
 
   public async get(id: string): Promise<User> {
-    // const user = await User.byTenant('1').findById(id)
     const user = await User.findById(id)
 
     if (!user) {

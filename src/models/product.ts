@@ -5,13 +5,14 @@ export interface Product {
   readonly id?: string
   sku: string
   name: string
-  images: string[]
-  categories: string[]
+  images?: string[]
+  categories?: string[]
+  oldPrice?: number
   price: number
-  active: boolean
+  active?: boolean
   quantity: number
-  description: string
-  especifications: any
+  description?: string
+  especifications?: any
   account: string
 }
 
