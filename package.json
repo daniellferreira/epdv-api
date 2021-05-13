@@ -6,16 +6,18 @@
   "scripts": {
     "build": "tsc",
     "postbuild": "cp -rv src/docs dist/src",
+    "prepare": "husky install",
     "build-start": "npm run build && npm run start",
     "start": "node dist/src/index.js",
-    "start:dev": "ts-node-dev 'src/index.ts'",
+    "start:dev": "ts-node-dev src/index.ts",
     "test": "npm run test:unit && npm run test:functional",
     "test:unit": "jest --passWithNoTests",
     "test:functional": "jest --projects ./test --runInBand --passWithNoTests",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
-    "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
+    "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
+    "pretty-quick": "pretty-quick --staged"
   },
   "engines": {
     "node": "14.16.1"
@@ -44,9 +46,11 @@
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^7.17.0",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "nock": "^13.0.6",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
+    "pretty-quick": "^3.1.0",
     "supertest": "^6.0.1",
     "ts-jest": "^26.4.4",
     "ts-node-dev": "^1.1.1",

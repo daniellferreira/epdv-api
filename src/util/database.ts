@@ -1,4 +1,4 @@
-import config from '@src/services/config'
+import { config } from '@src/services/config'
 import mongoose, { Mongoose } from 'mongoose'
 
 export const connect = async (): Promise<Mongoose> => {
