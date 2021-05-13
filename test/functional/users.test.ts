@@ -101,27 +101,21 @@ describe('Users functional tests', () => {
         .send(newUser)
 
       const { name, email } = newUser
-      const {
-        id,
-        createdAt,
-        updatedAt,
-        account,
-        active,
-        isAdmin,
-      } = responseCreate.body
+      const { id, createdAt, updatedAt, account, active, isAdmin } =
+        responseCreate.body
 
-      const responseGet = await await global.testRequest
+      const responseGet = await global.testRequest
         .get(`/users/${id}`)
         .set({ 'x-access-token': token })
         .send()
 
       expect(responseGet.status).toBe(200)
       expect(responseGet.body).toEqual({
+        active: true,
         name,
         email,
         id,
         account,
-        active,
         isAdmin,
         createdAt,
         updatedAt,
@@ -176,12 +170,9 @@ describe('Users functional tests', () => {
         })
         .send(newUser)
 
-      const { name, email } = newUser
-      const { id, createdAt, updatedAt, account, isAdmin } = responseCreate.body
+      const { id } = responseCreate.body
 
-      const responseGet = await await global.testRequest
-        .get(`/users/${id}`)
-        .send()
+      const responseGet = await global.testRequest.get(`/users/${id}`).send()
 
       expect(responseGet.status).toBe(401)
       expect(responseGet.body).toEqual({

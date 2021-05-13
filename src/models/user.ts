@@ -38,7 +38,6 @@ const schema = new mongoose.Schema(
 )
 
 schema.index({ email: 1 }, { unique: true })
-
 schema.index({ account: 1 })
 schema.index({ _id: 1, account: 1 })
 
