@@ -1,11 +1,5 @@
 import AuthService from '@src/lib/auth'
-import mongoose, {
-  Document,
-  Model,
-  model,
-  Schema,
-  PaginateModel,
-} from 'mongoose'
+import mongoose, { Document, model, Schema, PaginateModel } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 export interface User {
@@ -19,7 +13,6 @@ export interface User {
 }
 
 export interface IUserDocument extends Omit<User, 'id'>, Document {}
-//interface IUserModel extends Model<IUserDocument> {}
 type IUserModel = PaginateModel<IUserDocument>
 
 const schema = new mongoose.Schema(

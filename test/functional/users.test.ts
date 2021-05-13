@@ -488,7 +488,7 @@ describe('Users functional tests', () => {
         })
         .send({ name: 'Jane Doe' })
 
-      //expect(responseEdit.status).toBe(200)
+      expect(responseEdit.status).toBe(200)
       expect(responseEdit.body).toStrictEqual({
         ...responseCreate.body,
         name: 'Jane Doe',
