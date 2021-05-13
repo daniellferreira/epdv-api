@@ -14,12 +14,12 @@ export class UsersService {
     return user.save()
   }
 
-  public async get(filter: UsersListFilter, id: string): Promise<User> {
-    const user = await User.findOne({ ...filter, _id: id })
+  public async get(account: string, _id: string): Promise<User> {
+    const user = await User.findOne({ account, _id })
 
     if (!user) {
       throw new UserError(
-        `Record not found with id: ${id}`,
+        `Record not found with id: ${_id}`,
         UserStatusCodes.NotFound,
         'RECORD_NOTFOUND'
       )
@@ -29,7 +29,7 @@ export class UsersService {
   }
 
   public async getByEmail(email: string): Promise<User> {
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email })
 
     if (!user) {
       throw new UserError(
@@ -65,16 +65,12 @@ export class UsersService {
     )
   }
 
-  public async edit(
-    filter: UsersListFilter,
-    id: string,
-    data: any
-  ): Promise<User> {
-    const user = await User.findOne({ ...filter, _id: id })
+  public async edit(account: string, _id: string, data: any): Promise<User> {
+    const user = await User.findOne({ account, _id })
 
     if (!user) {
       throw new UserError(
-        `Record not found with id: ${id}`,
+        `Record not found with id: ${_id}`,
         UserStatusCodes.NotFound,
         'RECORD_NOTFOUND'
       )

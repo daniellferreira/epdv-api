@@ -42,8 +42,8 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const filter: UsersListFilter = { account: req.decoded?.user.account }
-      const user = await this.service.get(filter, req.params.id)
+      const account = req.decoded?.user.account
+      const user = await this.service.get(account, req.params.id)
       res.status(200).send(user)
     } catch (err) {
       next(err)
@@ -85,8 +85,8 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const filter: UsersListFilter = { account: req.decoded?.user.account }
-      const user = await this.service.edit(filter, req.params.id, req.body)
+      const account = req.decoded?.user.account
+      const user = await this.service.edit(account, req.params.id, req.body)
       res.status(200).send(user)
     } catch (err) {
       next(err)
