@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import { Application, static as staticExpress } from 'express'
 import './util/module-alias'
 import * as database from '@src/util/database'
+import cors from 'cors'
 import { Server as HttpServer } from 'http'
 import { ErrorHandler } from '@src/lib/errorHandler'
 import { config, Environment } from '@src/services/config'
@@ -17,6 +18,7 @@ export class SetupServer extends Server {
 
   private setupExpress(): void {
     this.app.use(bodyParser.json())
+    this.app.use(cors({ origin: '*' }))
   }
 
   private async setupControllers(): Promise<void> {
