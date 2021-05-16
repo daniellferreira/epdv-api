@@ -248,6 +248,16 @@
       "_type": "request_group"
     },
     {
+      "_id": "wrk_411949e8612942f0ba6ea88135766d2e",
+      "parentId": null,
+      "modified": 1617557338164,
+      "created": 1616956349121,
+      "name": "e-PDV API - v1",
+      "description": "Esta é a documentação interna de endpoints da API do sistema e-PDV.",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
       "_id": "req_0b4a4a6888364248b53c31cab672afc9",
       "parentId": "fld_b5b6db18518943ebb2964e476c59eab3",
       "modified": 1620314978766,
