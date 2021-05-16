@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2021-05-12T23:11:32.644Z",
+  "__export_date": "2021-05-13T23:38:40.526Z",
   "__export_source": "insomnia.desktop.app:v2021.3.0",
   "resources": [
     {
@@ -344,11 +344,11 @@
     {
       "_id": "req_0e8003057dc44d429bbdfc96b514607a",
       "parentId": "fld_0109993b1d864ad4a75955ed59f7e9f6",
-      "modified": 1620773681876,
+      "modified": 1620949021976,
       "created": 1616956358929,
       "url": "http://localhost:3000/users/",
       "name": "List",
-      "description": "Retorna a listagem de todos os usuários cadastrados.\n\n-> Pode ser utilizado a chave \"s\" para filtrar como contains e insensitive em nomes ou e-mails.",
+      "description": "Retorna a listagem dos usuários, podendo adicionar os seguintes campos:\n\n\n-> active: Se o usuário está ativado (true) ou desativado (false)\n\n-> s: Filtra como contains e insensitive em nomes ou e-mails\n\n-> limit: Limite de itens por página\n\n-> page: Página atual\n\n-> sort: Campo que deseja organizar (nome ou email) e ordem (asc ou desc)",
       "method": "GET",
       "body": {},
       "parameters": [
@@ -358,6 +358,30 @@
           "description": "",
           "id": "pair_606192cd073a4615999ad21094eede0d",
           "disabled": false
+        },
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "id": "pair_d4777dcc57a1491fa1498705aca687d2"
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "",
+          "id": "pair_0cdc4c58627f424db918ef0b600a736a"
+        },
+        {
+          "name": "page",
+          "value": "1",
+          "description": "",
+          "id": "pair_19db41e366b644769799bf95082cc7f6"
+        },
+        {
+          "name": "sort",
+          "value": "name,asc",
+          "description": "",
+          "id": "pair_86bc9bf9fe1e4be68addc20808314d97"
         }
       ],
       "headers": [
@@ -424,7 +448,7 @@
     {
       "_id": "req_061ad33b249b4f08af8d3819f8fae507",
       "parentId": "fld_0109993b1d864ad4a75955ed59f7e9f6",
-      "modified": 1620773740360,
+      "modified": 1620949081746,
       "created": 1616956358933,
       "url": "http://localhost:3000/users/609b0b62de38833d84f6e8bf",
       "name": "Edit",
@@ -432,7 +456,7 @@
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"wJane Doe New\"\n}"
+        "text": "{\n\t\"name\": \"Jane Doe New\"\n}"
       },
       "parameters": [],
       "headers": [
