@@ -1,4 +1,5 @@
 export interface ReqListQuery {
+  s: string
   page: number
   limit: number
   sort: string

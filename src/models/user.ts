@@ -1,5 +1,6 @@
 import AuthService from '@src/lib/auth'
-import mongoose, { Document, Model, model, Schema } from 'mongoose'
+import mongoose, { Document, model, Schema, PaginateModel } from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 export interface User {
   readonly id?: string
@@ -11,8 +12,8 @@ export interface User {
   account: string
 }
 
-interface IUserDocument extends Omit<User, 'id'>, Document {}
-interface IUserModel extends Model<IUserDocument> {}
+export interface IUserDocument extends Omit<User, 'id'>, Document {}
+type IUserModel = PaginateModel<IUserDocument>
 
 const schema = new mongoose.Schema(
   {
@@ -39,6 +40,8 @@ const schema = new mongoose.Schema(
 schema.index({ email: 1 }, { unique: true })
 schema.index({ account: 1 })
 schema.index({ _id: 1, account: 1 })
+
+schema.plugin(mongoosePaginate)
 
 schema.pre<IUserDocument>('save', async function (): Promise<void> {
   if (!this.password || !this.isModified('password')) {

@@ -23,7 +23,7 @@ describe('Users functional tests', () => {
       .send({ email: newAccount.email, password: 'test123456' })
     token = responseToken.body['auth-token']
   })
-  describe('When creating a new user', () => {
+  describe('When creating new user', () => {
     it('should successfully create a new user', async () => {
       const newUser = {
         name: 'John Doe',
@@ -85,7 +85,7 @@ describe('Users functional tests', () => {
     })
   })
 
-  describe('When getting a user', () => {
+  describe('When getting user', () => {
     it('should successfully get a created user', async () => {
       const newUser = {
         name: 'John Doe',
@@ -101,7 +101,8 @@ describe('Users functional tests', () => {
         .send(newUser)
 
       const { name, email } = newUser
-      const { id, createdAt, updatedAt, account, isAdmin } = responseCreate.body
+      const { id, createdAt, updatedAt, account, active, isAdmin } =
+        responseCreate.body
 
       const responseGet = await global.testRequest
         .get(`/users/${id}`)
@@ -181,8 +182,8 @@ describe('Users functional tests', () => {
     })
   })
 
-  describe('When listing the users', () => {
-    it('should list two created users', async () => {
+  describe('When listing users', () => {
+    it('should list all created users', async () => {
       let user1 = {
         name: 'John Doe',
         email: 'john@mail.com',
@@ -220,7 +221,18 @@ describe('Users functional tests', () => {
 
       expect(responseList.status).toBe(200)
       // userMaster = account created beforeEach
-      expect(responseList.body).toEqual([userMaster, user1, user2])
+      expect(responseList.body).toEqual({
+        docs: [userMaster, user1, user2],
+        hasNextPage: false,
+        hasPrevPage: false,
+        limit: 10,
+        nextPage: null,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 3,
+        totalPages: 1,
+      })
     })
 
     it('should not list created users without token', async () => {
@@ -270,7 +282,18 @@ describe('Users functional tests', () => {
         .send()
 
       expect(response.status).toBe(200)
-      expect(response.body).toEqual([user1, user2])
+      expect(response.body).toEqual({
+        docs: [user1, user2],
+        hasNextPage: false,
+        hasPrevPage: false,
+        limit: 10,
+        nextPage: null,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 2,
+        totalPages: 1,
+      })
     })
 
     it('should find two created users emails contains "mail"', async () => {
@@ -310,7 +333,18 @@ describe('Users functional tests', () => {
         .send()
 
       expect(response.status).toBe(200)
-      expect(response.body).toEqual([userMaster, user1, user2])
+      expect(response.body).toEqual({
+        docs: [userMaster, user1, user2],
+        hasNextPage: false,
+        hasPrevPage: false,
+        limit: 10,
+        nextPage: null,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 3,
+        totalPages: 1,
+      })
     })
 
     it('should not find created users from another account', async () => {
@@ -344,7 +378,83 @@ describe('Users functional tests', () => {
         .send()
 
       expect(response.status).toBe(200)
-      expect(response.body).toEqual([userMaster, user1])
+      expect(response.body).toEqual({
+        docs: [userMaster, user1],
+        hasNextPage: false,
+        hasPrevPage: false,
+        limit: 10,
+        nextPage: null,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 2,
+        totalPages: 1,
+      })
+    })
+
+    it('should find three created users, separete them into two pages and sort name,asc', async () => {
+      let user1 = {
+        name: 'Jane Doe2',
+        email: 'john@mail.com',
+        password: 'test123456',
+      }
+
+      let user2 = {
+        name: 'Jane Doe1',
+        email: 'jane+1@mail.com',
+        password: 'test123456',
+      }
+
+      let user3 = {
+        name: 'Jane Doe2',
+        email: 'jane+2@mail.com',
+        password: 'test123456',
+      }
+
+      const respUser1 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user1)
+      user1 = respUser1.body
+
+      const respUser2 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user2)
+      user2 = respUser2.body
+
+      const respUser3 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user3)
+      user3 = respUser3.body
+
+      const response = await global.testRequest
+        .get('/users/?active=true&s=doe&limit=1&page=1&sort=name,asc')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({
+        docs: [user2],
+        hasNextPage: true,
+        hasPrevPage: false,
+        limit: 1,
+        nextPage: 2,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 3,
+        totalPages: 3,
+      })
     })
   })
 
@@ -411,7 +521,7 @@ describe('Users functional tests', () => {
         tenantId: '1',
       }
 
-      const responseCreate = await global.testRequest
+      await global.testRequest
         .post('/users')
         .set({
           'x-access-token': token,
