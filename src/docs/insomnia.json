@@ -1,9 +1,208 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2021-05-11T22:56:44.135Z",
+  "__export_date": "2021-05-13T23:38:40.526Z",
   "__export_source": "insomnia.desktop.app:v2021.3.0",
   "resources": [
+    {
+      "_id": "req_4b68eed305d242ab87f1c5e879c05b21",
+      "parentId": "fld_810a395cf17b4277b9a2c664a00fb0b6",
+      "modified": 1620705237891,
+      "created": 1620697955356,
+      "url": "http://localhost:3000/products/",
+      "name": "Create",
+      "description": "Cria produto vinculado a conta informada no token.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"sku\": \"CELSS8B128\",\n  \"name\": \"Samsung Galaxy S8 Branco\",\n  \"images\": [\"https://images-americanas.b2w.io/produtos/01/00/img/2137539/6/2137539613_1GG.jpg\"],\n  \"price\": 2299.99,\n  \"quantity\": 100\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_afaac5e1a5a44e818fe01f17a824362a"
+        },
+        {
+          "name": "x-access-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiRGFuaWVsIExvcGVzIEZlcnJlaXJhIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiYWNjb3VudCI6IjYwOTllNDNlZGI1ZmRlNDQ3OTg3MGFlZSIsImNyZWF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsImlkIjoiNjA5OWU0M2VkYjVmZGU0NDc5ODcwYWVmIn0sImlhdCI6MTYyMDcwMDcwNywiZXhwIjoxNjIwNzAwNzkzfQ.XQ77ycF2ne8F9YIlKwnopxxhkkTuNmyhw97GRJ_BSB8",
+          "description": "",
+          "id": "pair_8ef76216a5cf403b82a46972f9e34ea1"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1616362536623,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_810a395cf17b4277b9a2c664a00fb0b6",
+      "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
+      "modified": 1620697941883,
+      "created": 1620697941883,
+      "name": "Products",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1620697941883,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_411949e8612942f0ba6ea88135766d2e",
+      "parentId": null,
+      "modified": 1617557338164,
+      "created": 1616956349121,
+      "name": "e-PDV API - v1",
+      "description": "Esta é a documentação interna de endpoints da API do sistema e-PDV.",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_13e22b4f23df49c7b1d69338be1630bf",
+      "parentId": "fld_810a395cf17b4277b9a2c664a00fb0b6",
+      "modified": 1620705364528,
+      "created": 1620699335098,
+      "url": "http://localhost:3000/products",
+      "name": "List",
+      "description": "Retorna a listagem de todos os produtos cadastrados.\n\n-> Os parâmetros (page, limit, sort, active) são opcionais",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "page",
+          "value": "1",
+          "description": "",
+          "id": "pair_d065cfa543f54d5683a1e9710f65323b",
+          "disabled": false
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "",
+          "id": "pair_6ccc36840d2b46e0897263b0c381417a",
+          "disabled": false
+        },
+        {
+          "name": "sort",
+          "value": "name,asc;createdAt,asc",
+          "description": "",
+          "id": "pair_fe34181e82b54602b8fcb0f3e663f9f5",
+          "disabled": false
+        },
+        {
+          "name": "active",
+          "value": "false",
+          "description": "",
+          "id": "pair_5de8404c4c5d4db485c475375edb6935",
+          "disabled": false
+        }
+      ],
+      "headers": [
+        {
+          "name": "Content-Ttpe",
+          "value": "application/json",
+          "description": "",
+          "id": "pair_a489d3710b844f8699a1c457345aa950"
+        },
+        {
+          "name": "x-access-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiRGFuaWVsIExvcGVzIEZlcnJlaXJhIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiYWNjb3VudCI6IjYwOTllNDNlZGI1ZmRlNDQ3OTg3MGFlZSIsImNyZWF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsImlkIjoiNjA5OWU0M2VkYjVmZGU0NDc5ODcwYWVmIn0sImlhdCI6MTYyMDcwNDgyNiwiZXhwIjoxNjIwNzA0OTEyfQ.UtUpwZ6Rl-OQLksJ6v3gk7JQS4hS8J9oaTejz7E6j5Q",
+          "description": "",
+          "id": "pair_ac3ba77de54048089ce6d00d43d8674a"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1616362536573,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_b9aef72daab04418b734aba1c062c87e",
+      "parentId": "fld_810a395cf17b4277b9a2c664a00fb0b6",
+      "modified": 1620705291112,
+      "created": 1620699752946,
+      "url": "http://localhost:3000/products/6099ee293868405d9dd6f545",
+      "name": "Get",
+      "description": "Retorna detalhes do produto solicitado.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Ttpe",
+          "value": "application/json",
+          "description": "",
+          "id": "pair_a489d3710b844f8699a1c457345aa950"
+        },
+        {
+          "name": "x-access-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiRGFuaWVsIExvcGVzIEZlcnJlaXJhIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiYWNjb3VudCI6IjYwOTllNDNlZGI1ZmRlNDQ3OTg3MGFlZSIsImNyZWF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsImlkIjoiNjA5OWU0M2VkYjVmZGU0NDc5ODcwYWVmIn0sImlhdCI6MTYyMDcwNDgwMSwiZXhwIjoxNjIwNzA0ODg3fQ.okmU5fxLmw5q7_CecD_mIOJ1wXnyFSFuH9_iYKquQUU",
+          "description": "",
+          "id": "pair_10d0f38fd7a343c59d6e45614c3dc806"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1616362536523,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_d99b872eeab3438bb3efd081a3a1aaa0",
+      "parentId": "fld_810a395cf17b4277b9a2c664a00fb0b6",
+      "modified": 1620705311585,
+      "created": 1620700049866,
+      "url": "http://localhost:3000/products/6099ee293868405d9dd6f545",
+      "name": "Edit",
+      "description": "Edita um produto existente.\n\n-> Pode ser usado para ativar/desativar um produto através do campo \"active\".",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"active\": false\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_27098661576d402fbec479a3e19f3f87"
+        },
+        {
+          "name": "x-access-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiRGFuaWVsIExvcGVzIEZlcnJlaXJhIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiYWNjb3VudCI6IjYwOTllNDNlZGI1ZmRlNDQ3OTg3MGFlZSIsImNyZWF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsImlkIjoiNjA5OWU0M2VkYjVmZGU0NDc5ODcwYWVmIn0sImlhdCI6MTYyMDcwNDgwMSwiZXhwIjoxNjIwNzA0ODg3fQ.okmU5fxLmw5q7_CecD_mIOJ1wXnyFSFuH9_iYKquQUU",
+          "description": "",
+          "id": "pair_004adc2e27a14bea9a91434f85351cd2"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1616362536473,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
     {
       "_id": "req_d58c78be601043ecaac0fec80fe90f56",
       "parentId": "fld_fef09fddcda74a9aaef874cd0a6c4086",
@@ -155,11 +354,11 @@
     {
       "_id": "req_0e8003057dc44d429bbdfc96b514607a",
       "parentId": "fld_0109993b1d864ad4a75955ed59f7e9f6",
-      "modified": 1620773681876,
+      "modified": 1620949021976,
       "created": 1616956358929,
       "url": "http://localhost:3000/users/",
       "name": "List",
-      "description": "Retorna a listagem de todos os usuários cadastrados.\n\n-> Pode ser utilizado a chave \"s\" para filtrar como contains e insensitive em nomes ou e-mails.",
+      "description": "Retorna a listagem dos usuários, podendo adicionar os seguintes campos:\n\n\n-> active: Se o usuário está ativado (true) ou desativado (false)\n\n-> s: Filtra como contains e insensitive em nomes ou e-mails\n\n-> limit: Limite de itens por página\n\n-> page: Página atual\n\n-> sort: Campo que deseja organizar (nome ou email) e ordem (asc ou desc)",
       "method": "GET",
       "body": {},
       "parameters": [
@@ -169,6 +368,30 @@
           "description": "",
           "id": "pair_606192cd073a4615999ad21094eede0d",
           "disabled": false
+        },
+        {
+          "name": "active",
+          "value": "true",
+          "description": "",
+          "id": "pair_d4777dcc57a1491fa1498705aca687d2"
+        },
+        {
+          "name": "limit",
+          "value": "10",
+          "description": "",
+          "id": "pair_0cdc4c58627f424db918ef0b600a736a"
+        },
+        {
+          "name": "page",
+          "value": "1",
+          "description": "",
+          "id": "pair_19db41e366b644769799bf95082cc7f6"
+        },
+        {
+          "name": "sort",
+          "value": "name,asc",
+          "description": "",
+          "id": "pair_86bc9bf9fe1e4be68addc20808314d97"
         }
       ],
       "headers": [
@@ -235,7 +458,7 @@
     {
       "_id": "req_061ad33b249b4f08af8d3819f8fae507",
       "parentId": "fld_0109993b1d864ad4a75955ed59f7e9f6",
-      "modified": 1620773740360,
+      "modified": 1620949081746,
       "created": 1616956358933,
       "url": "http://localhost:3000/users/609b0b62de38833d84f6e8bf",
       "name": "Edit",
@@ -243,7 +466,7 @@
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"wJane Doe New\"\n}"
+        "text": "{\n\t\"name\": \"Jane Doe New\"\n}"
       },
       "parameters": [],
       "headers": [

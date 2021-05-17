@@ -1,12 +1,11 @@
 import { ClassMiddleware, Controller, Get, Post, Put } from '@overnightjs/core'
 import { NextFunction, Request, Response } from 'express'
-import { UsersListFilter, UsersService } from '@src/services/users'
+import { ProductsListFilter, ProductsService } from '@src/services/products'
 import { authMiddleware } from '@src/middlewares/auth'
 import { ReqListQuery, stringToSort } from '@src/lib/paginate'
 
 interface GetParams {
   id: string
-  email: string
 }
 
 interface ListParams {
@@ -14,9 +13,9 @@ interface ListParams {
 }
 
 @ClassMiddleware(authMiddleware)
-@Controller('users')
-export class UserController {
-  constructor(private service = new UsersService()) {}
+@Controller('products')
+export class ProductController {
+  constructor(private service = new ProductsService()) {}
 
   @Post('')
   public async create(
@@ -25,11 +24,12 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const newUser = await this.service.create({
+      const product = await this.service.create({
         ...req.body,
-        ...{ account: req.decoded?.user.account },
+        account: req.decoded?.user.account,
       })
-      res.status(201).send(newUser)
+
+      res.status(201).send(product)
     } catch (err) {
       next(err)
     }
@@ -42,9 +42,12 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const account = req.decoded?.user.account
-      const user = await this.service.get(account, req.params.id)
-      res.status(200).send(user)
+      const product = await this.service.get(
+        req.decoded?.user.account,
+        req.params.id
+      )
+
+      res.status(200).send(product)
     } catch (err) {
       next(err)
     }
@@ -57,22 +60,21 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { s, limit, page, sort, active } = req.query
-      const filter: UsersListFilter = { account: req.decoded?.user.account }
+      const { limit, page, sort, active } = req.query
+      const filter: ProductsListFilter = { account: req.decoded?.user.account }
 
       if (active != null) {
         filter.active = active
       }
-      console.log(filter.active)
-      const users = await this.service.list(
+
+      const products = await this.service.list(
         filter,
-        s,
         limit,
         page,
         stringToSort(sort)
       )
 
-      res.status(200).send(users)
+      res.status(200).send(products)
     } catch (err) {
       next(err)
     }
@@ -85,9 +87,13 @@ export class UserController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const account = req.decoded?.user.account
-      const user = await this.service.edit(account, req.params.id, req.body)
-      res.status(200).send(user)
+      const product = await this.service.edit(
+        req.decoded?.user.account,
+        req.params.id,
+        req.body
+      )
+
+      res.status(200).send(product)
     } catch (err) {
       next(err)
     }
