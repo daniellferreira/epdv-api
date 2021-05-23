@@ -63,7 +63,7 @@ export class UserController {
       if (active != null) {
         filter.active = active
       }
-      console.log(filter.active)
+
       const users = await this.service.list(
         filter,
         s,
