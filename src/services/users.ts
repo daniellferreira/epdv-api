@@ -44,7 +44,7 @@ export class UsersService {
 
   public async list(
     filter: UsersListFilter,
-    s = '',
+    search: string,
     limit = 10,
     page = 1,
     sort: SortObject | undefined
@@ -53,16 +53,16 @@ export class UsersService {
       sort = undefined
     }
 
-    return User.paginate(
-      User.find({
-        ...filter,
-        $or: [
-          { name: { $regex: s, $options: 'i' } },
-          { email: { $regex: s, $options: 'i' } },
-        ],
-      }),
-      { limit, page, sort }
-    )
+    const query: any = { ...filter }
+
+    if (search) {
+      query['$or'] = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+      ]
+    }
+
+    return User.paginate(query, { limit, page, sort })
   }
 
   public async edit(account: string, _id: string, data: any): Promise<User> {

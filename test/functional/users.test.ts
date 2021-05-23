@@ -119,6 +119,7 @@ describe('Users functional tests', () => {
         isAdmin,
         createdAt,
         updatedAt,
+        scope: ['admin'],
       })
     })
 
