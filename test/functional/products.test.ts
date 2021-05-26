@@ -293,7 +293,7 @@ describe('Products functional tests', () => {
       })
     })
 
-    it('should not list created products with invalide filter', async () => {
+    it('should not list created products with invalid filter', async () => {
       const responseList = await global.testRequest
         .get('/products/?active=abc&limit=1&page=1&sort=name,asc')
         .set({
