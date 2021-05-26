@@ -588,7 +588,7 @@ describe('Users functional tests', () => {
       })
     })
 
-    it('should find three created users and sort by invalid value', async () => {
+    it('should not list with invalid sort', async () => {
       const responseList = await global.testRequest
         .get('/users/?sort=abc,asc')
         .set({
