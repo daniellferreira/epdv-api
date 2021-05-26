@@ -41,14 +41,6 @@ export class ProductsService {
   public async edit(account: string, _id: string, data: any): Promise<Product> {
     const product = await Product.findOne({ account, _id })
 
-    if (!product) {
-      throw new UserError(
-        `Record not found with id: ${_id}`,
-        UserStatusCodes.NotFound,
-        'RECORD_NOTFOUND'
-      )
-    }
-
     Object.assign(product, data)
 
     return product.save()
