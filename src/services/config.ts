@@ -14,6 +14,10 @@ interface Config {
     key: string
     tokenExpiresIn: string
   }
+  checkout: {
+    apiKey: string
+    apiVersion: string
+  }
 }
 
 const config: Config = {
@@ -25,6 +29,10 @@ const config: Config = {
   auth: {
     key: process.env.AUTH_KEY as string,
     tokenExpiresIn: process.env.AUTH_TOKENEXPIRATION as string,
+  },
+  checkout: {
+    apiKey: process.env.STRIPE_API_KEY as string,
+    apiVersion: process.env.STRIPE_API_VERSION as string,
   },
 }
 
