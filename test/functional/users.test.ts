@@ -599,7 +599,7 @@ describe('Users functional tests', () => {
       expect(responseList.status).toBe(404)
       expect(responseList.body).toEqual({
         cause: 'RECORD_NOTFOUND',
-        message: 'Record not found with sort',
+        message: 'Sort field is invalid',
       })
     })
 

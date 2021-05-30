@@ -51,7 +51,7 @@ export class UsersService {
   ): Promise<PaginateResult<IUserDocument>> {
     if (sort && !(sort['name'] || sort['email'] || sort['createdAt'])) {
       throw new UserError(
-        `Record not found with sort`,
+        `Sort field is invalid`,
         UserStatusCodes.NotFound,
         'RECORD_NOTFOUND'
       )
