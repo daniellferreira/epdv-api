@@ -12,7 +12,7 @@ export interface Product {
   categories?: string[]
   oldPrice?: number
   price: number
-  currency: PriceCurrency
+  currency?: PriceCurrency
   active?: boolean
   quantity: number
   description?: string
