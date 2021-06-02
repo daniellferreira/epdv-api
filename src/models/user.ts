@@ -2,9 +2,13 @@ import AuthService from '@src/lib/auth'
 import mongoose, { Document, model, Schema, PaginateModel } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
+const userScope = ['admin', 'buyer'] as const
+type UserScope = typeof userScope[number]
+
 export interface User {
   readonly id?: string
   name: string
+  scope: UserScope
   email: string
   active: boolean
   password: string
@@ -18,6 +22,7 @@ type IUserModel = PaginateModel<IUserDocument>
 const schema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    scope: { type: [String], enum: userScope, default: ['admin'] },
     email: { type: String, required: true },
     active: { type: Boolean, default: true },
     password: { type: String, required: true },

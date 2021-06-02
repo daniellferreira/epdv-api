@@ -44,37 +44,34 @@ export class UsersService {
 
   public async list(
     filter: UsersListFilter,
-    s = '',
+    search: string,
     limit = 10,
     page = 1,
     sort: SortObject | undefined
   ): Promise<PaginateResult<IUserDocument>> {
     if (sort && !(sort['name'] || sort['email'] || sort['createdAt'])) {
-      sort = undefined
-    }
-
-    return User.paginate(
-      User.find({
-        ...filter,
-        $or: [
-          { name: { $regex: s, $options: 'i' } },
-          { email: { $regex: s, $options: 'i' } },
-        ],
-      }),
-      { limit, page, sort }
-    )
-  }
-
-  public async edit(account: string, _id: string, data: any): Promise<User> {
-    const user = await User.findOne({ account, _id })
-
-    if (!user) {
       throw new UserError(
-        `Record not found with id: ${_id}`,
+        `Sort field is invalid`,
         UserStatusCodes.NotFound,
         'RECORD_NOTFOUND'
       )
     }
+
+    const query: any = { ...filter }
+
+    if (search) {
+      query['$or'] = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+      ]
+    }
+
+    return User.paginate(query, { limit, page, sort })
+  }
+
+  // eslint-disable-next-line
+  public async edit(account: string, _id: string, data: any): Promise<User> {
+    const user = await User.findOne({ account, _id })
 
     Object.assign(user, data)
 

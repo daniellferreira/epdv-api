@@ -1,5 +1,4 @@
 import { Account } from '@src/models/account'
-import { UserError, UserStatusCodes } from '@src/util/errors'
 
 export class AccountService {
   public create(data: Account): Promise<Account> {
