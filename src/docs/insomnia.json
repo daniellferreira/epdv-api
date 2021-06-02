@@ -1,13 +1,111 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2021-05-13T23:38:40.526Z",
+  "__export_date": "2021-06-02T00:31:50.089Z",
   "__export_source": "insomnia.desktop.app:v2021.3.0",
   "resources": [
     {
+      "_id": "req_0b4a4a6888364248b53c31cab672afc9",
+      "parentId": "fld_b5b6db18518943ebb2964e476c59eab3",
+      "modified": 1620314978766,
+      "created": 1618772414470,
+      "url": "http://localhost:3000/accounts",
+      "name": "Create",
+      "description": "Criar conta e usuário como administrador.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Jane Doe\",\n\t\"email\": \"JaneDoe@mail.com\",\n\t\"password\": \"123456\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_be37d1b98a0141b39012a13a1bbf9882"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1619356180236.75,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_b5b6db18518943ebb2964e476c59eab3",
+      "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
+      "modified": 1622593268918,
+      "created": 1619379656606,
+      "name": "Accounts",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1622380235580,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_411949e8612942f0ba6ea88135766d2e",
+      "parentId": null,
+      "modified": 1617557338164,
+      "created": 1616956349121,
+      "name": "e-PDV API - v1",
+      "description": "Esta é a documentação interna de endpoints da API do sistema e-PDV.",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_d58c78be601043ecaac0fec80fe90f56",
+      "parentId": "fld_fef09fddcda74a9aaef874cd0a6c4086",
+      "modified": 1619569040629,
+      "created": 1619285750929,
+      "url": "http://localhost:3000/auth/token",
+      "name": "Authenticate",
+      "description": "Autentica usuário e gera token.",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"JaneDoe@mail.com\",\n\t\"password\": \"123456\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_634e08947cef4320a99cff49c86d23d0"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1619285750929,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_fef09fddcda74a9aaef874cd0a6c4086",
+      "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
+      "modified": 1622593272114,
+      "created": 1619379686099,
+      "name": "Authenticate",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1622380235555,
+      "_type": "request_group"
+    },
+    {
       "_id": "req_4b68eed305d242ab87f1c5e879c05b21",
       "parentId": "fld_810a395cf17b4277b9a2c664a00fb0b6",
-      "modified": 1620705237891,
+      "modified": 1622385404691,
       "created": 1620697955356,
       "url": "http://localhost:3000/products/",
       "name": "Create",
@@ -15,7 +113,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"sku\": \"CELSS8B128\",\n  \"name\": \"Samsung Galaxy S8 Branco\",\n  \"images\": [\"https://images-americanas.b2w.io/produtos/01/00/img/2137539/6/2137539613_1GG.jpg\"],\n  \"price\": 2299.99,\n  \"quantity\": 100\n}"
+        "text": "{\n\t\"sku\": \"CELSS8P128\",\n  \"name\": \"Samsung Galaxy S8 Preto\",\n  \"images\": [\"https://images-americanas.b2w.io/produtos/01/00/img/2137539/6/2137539613_1GG.jpg\"],\n  \"price\": 2299.99,\n  \"quantity\": 100\n}"
       },
       "parameters": [],
       "headers": [
@@ -26,7 +124,7 @@
         },
         {
           "name": "x-access-token",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiRGFuaWVsIExvcGVzIEZlcnJlaXJhIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiYWNjb3VudCI6IjYwOTllNDNlZGI1ZmRlNDQ3OTg3MGFlZSIsImNyZWF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsImlkIjoiNjA5OWU0M2VkYjVmZGU0NDc5ODcwYWVmIn0sImlhdCI6MTYyMDcwMDcwNywiZXhwIjoxNjIwNzAwNzkzfQ.XQ77ycF2ne8F9YIlKwnopxxhkkTuNmyhw97GRJ_BSB8",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InNjb3BlIjpbImFkbWluIl0sImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiSmFuZSBEb2UiLCJlbWFpbCI6IkphbmVEb2VAbWFpbC5jb20iLCJhY2NvdW50IjoiNjBiM2EwNDMxYmRiZTgxYTEzMDFmNDZjIiwiY3JlYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwidXBkYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwiaWQiOiI2MGIzYTA0MzFiZGJlODFhMTMwMWY0NmQifSwiaWF0IjoxNjIyMzg0NzA5LCJleHAiOjE2MjIzODgzMDl9.B3erSj-EZR4ToD1meFFm3JeB_n99HnsspcvJyrSivmo",
           "description": "",
           "id": "pair_8ef76216a5cf403b82a46972f9e34ea1"
         }
@@ -45,29 +143,19 @@
     {
       "_id": "fld_810a395cf17b4277b9a2c664a00fb0b6",
       "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
-      "modified": 1620697941883,
+      "modified": 1622593276545,
       "created": 1620697941883,
       "name": "Products",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
-      "metaSortKey": -1620697941883,
+      "metaSortKey": -1622380235536.25,
       "_type": "request_group"
-    },
-    {
-      "_id": "wrk_411949e8612942f0ba6ea88135766d2e",
-      "parentId": null,
-      "modified": 1617557338164,
-      "created": 1616956349121,
-      "name": "e-PDV API - v1",
-      "description": "Esta é a documentação interna de endpoints da API do sistema e-PDV.",
-      "scope": "collection",
-      "_type": "workspace"
     },
     {
       "_id": "req_13e22b4f23df49c7b1d69338be1630bf",
       "parentId": "fld_810a395cf17b4277b9a2c664a00fb0b6",
-      "modified": 1620705364528,
+      "modified": 1622385234247,
       "created": 1620699335098,
       "url": "http://localhost:3000/products",
       "name": "List",
@@ -101,7 +189,7 @@
           "value": "false",
           "description": "",
           "id": "pair_5de8404c4c5d4db485c475375edb6935",
-          "disabled": false
+          "disabled": true
         }
       ],
       "headers": [
@@ -113,7 +201,7 @@
         },
         {
           "name": "x-access-token",
-          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiRGFuaWVsIExvcGVzIEZlcnJlaXJhIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiYWNjb3VudCI6IjYwOTllNDNlZGI1ZmRlNDQ3OTg3MGFlZSIsImNyZWF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTFUMDE6NTY6MTQuNDgyWiIsImlkIjoiNjA5OWU0M2VkYjVmZGU0NDc5ODcwYWVmIn0sImlhdCI6MTYyMDcwNDgyNiwiZXhwIjoxNjIwNzA0OTEyfQ.UtUpwZ6Rl-OQLksJ6v3gk7JQS4hS8J9oaTejz7E6j5Q",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InNjb3BlIjpbImFkbWluIl0sImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiSmFuZSBEb2UiLCJlbWFpbCI6IkphbmVEb2VAbWFpbC5jb20iLCJhY2NvdW50IjoiNjBiM2EwNDMxYmRiZTgxYTEzMDFmNDZjIiwiY3JlYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwidXBkYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwiaWQiOiI2MGIzYTA0MzFiZGJlODFhMTMwMWY0NmQifSwiaWF0IjoxNjIyMzg0NzA5LCJleHAiOjE2MjIzODgzMDl9.B3erSj-EZR4ToD1meFFm3JeB_n99HnsspcvJyrSivmo",
           "description": "",
           "id": "pair_ac3ba77de54048089ce6d00d43d8674a"
         }
@@ -204,72 +292,34 @@
       "_type": "request"
     },
     {
-      "_id": "req_d58c78be601043ecaac0fec80fe90f56",
-      "parentId": "fld_fef09fddcda74a9aaef874cd0a6c4086",
-      "modified": 1619569040629,
-      "created": 1619285750929,
-      "url": "http://localhost:3000/auth/token",
-      "name": "Authenticate",
-      "description": "Autentica usuário e gera token.",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"JaneDoe@mail.com\",\n\t\"password\": \"123456\"\n}"
-      },
-      "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json",
-          "id": "pair_634e08947cef4320a99cff49c86d23d0"
-        }
-      ],
-      "authentication": {},
-      "metaSortKey": -1619285750929,
-      "isPrivate": false,
-      "settingStoreCookies": true,
-      "settingSendCookies": true,
-      "settingDisableRenderRequestBody": false,
-      "settingEncodeUrl": true,
-      "settingRebuildPath": true,
-      "settingFollowRedirects": "global",
-      "_type": "request"
-    },
-    {
-      "_id": "fld_fef09fddcda74a9aaef874cd0a6c4086",
-      "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
-      "modified": 1619379686099,
-      "created": 1619379686099,
-      "name": "Authenticate",
-      "description": "",
-      "environment": {},
-      "environmentPropertyOrder": null,
-      "metaSortKey": -1619379686099,
-      "_type": "request_group"
-    },
-    {
-      "_id": "req_0b4a4a6888364248b53c31cab672afc9",
-      "parentId": "fld_b5b6db18518943ebb2964e476c59eab3",
-      "modified": 1620314978766,
-      "created": 1618772414470,
-      "url": "http://localhost:3000/accounts",
+      "_id": "req_264423683eb64d63a8f545351f02d958",
+      "parentId": "fld_d39e5696062f4b2c9a3bbd2da5f98cd7",
+      "modified": 1622593898295,
+      "created": 1622380252071,
+      "url": "http://localhost:3000/checkout",
       "name": "Create",
-      "description": "Criar conta e usuário como administrador.",
+      "description": "Cria um checkout no Stripe.\n\n**Body:** \n- cart_items: array contendo os itens do carrinho. Um item contém o id do produto e a quantidade.\n- success_url: url de sucesso no app. O Stripe irá redirecionar em caso de sucesso.\n- cancel_url: url de cancelamento no app. O Stripe irá redirecionar em caso de sucesso",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"Jane Doe\",\n\t\"email\": \"JaneDoe@mail.com\",\n\t\"password\": \"123456\"\n}"
+        "text": "{\n\t\"cart_items\": [\n\t\t{\n\t\t\t\"id\": \"60b3a26160389e1da418701e\",\n\t\t\t\"quantity\": 2\n\t\t}\n\t],\n\t\"success_url\": \"https://e-pdv-app.vercel.app/\",\n\t\"cancel_url\": \"https://e-pdv-app.vercel.app/\"\n}"
       },
       "parameters": [],
       "headers": [
         {
           "name": "Content-Type",
           "value": "application/json",
-          "id": "pair_be37d1b98a0141b39012a13a1bbf9882"
+          "id": "pair_94ec251d1d43488ba3ce8360076b5675"
+        },
+        {
+          "name": "x-access-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InNjb3BlIjpbImFkbWluIl0sImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiSmFuZSBEb2UiLCJlbWFpbCI6IkphbmVEb2VAbWFpbC5jb20iLCJhY2NvdW50IjoiNjBiM2EwNDMxYmRiZTgxYTEzMDFmNDZjIiwiY3JlYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwidXBkYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwiaWQiOiI2MGIzYTA0MzFiZGJlODFhMTMwMWY0NmQifSwiaWF0IjoxNjIyMzg5MjMxLCJleHAiOjE2MjIzOTI4MzF9.FCN3CHXfMY4cX064M8hBMqYQyupksxAK6ONz7SgNeog",
+          "description": "",
+          "id": "pair_121d16b2998d4328b5f0e0c80b92283c"
         }
       ],
       "authentication": {},
-      "metaSortKey": -1619356180236.75,
+      "metaSortKey": -1622380263568,
       "isPrivate": false,
       "settingStoreCookies": true,
       "settingSendCookies": true,
@@ -280,16 +330,52 @@
       "_type": "request"
     },
     {
-      "_id": "fld_b5b6db18518943ebb2964e476c59eab3",
+      "_id": "fld_d39e5696062f4b2c9a3bbd2da5f98cd7",
       "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
-      "modified": 1619379656606,
-      "created": 1619379656606,
-      "name": "Accounts",
+      "modified": 1622593289434,
+      "created": 1622380235530,
+      "name": "Checkout",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
-      "metaSortKey": -1619379656606,
+      "metaSortKey": -1622380235534.6875,
       "_type": "request_group"
+    },
+    {
+      "_id": "req_4c119d7371bb487fa3b43ef3f962c639",
+      "parentId": "fld_d39e5696062f4b2c9a3bbd2da5f98cd7",
+      "modified": 1622593730704,
+      "created": 1622380263518,
+      "url": "http://localhost:3000/checkout/cs_test_a1VpkPd1UIIDNiE1MsLTOfrN0TnpJ4XriOmHmkCCQyl2nfim5HpDGF8Wos",
+      "name": "Get",
+      "description": "Retorna uma sessão de checkout no Stripe. Recebe como primeiro parâmetro o id do checkout no Stripe.",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "x-access-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InNjb3BlIjpbImFkbWluIl0sImFjdGl2ZSI6dHJ1ZSwiaXNBZG1pbiI6InRydWUiLCJuYW1lIjoiSmFuZSBEb2UiLCJlbWFpbCI6IkphbmVEb2VAbWFpbC5jb20iLCJhY2NvdW50IjoiNjBiM2EwNDMxYmRiZTgxYTEzMDFmNDZjIiwiY3JlYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwidXBkYXRlZEF0IjoiMjAyMS0wNS0zMFQxNDoyNTowNy4yMDJaIiwiaWQiOiI2MGIzYTA0MzFiZGJlODFhMTMwMWY0NmQifSwiaWF0IjoxNjIyMzg5MjMxLCJleHAiOjE2MjIzOTI4MzF9.FCN3CHXfMY4cX064M8hBMqYQyupksxAK6ONz7SgNeog",
+          "description": "",
+          "id": "pair_630096db611e4cef8b5d27464d51a5d1"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "description": "",
+          "id": "pair_7465401d67624e22bd5de732925daf3a"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1622380263518,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
     },
     {
       "_id": "req_658d7f8d34cd4f6fa54804f9ff054a10",
@@ -332,13 +418,13 @@
     {
       "_id": "fld_0109993b1d864ad4a75955ed59f7e9f6",
       "parentId": "wrk_411949e8612942f0ba6ea88135766d2e",
-      "modified": 1616956366702,
+      "modified": 1622593286683,
       "created": 1616956358925,
       "name": "Users",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
-      "metaSortKey": -1000000050,
+      "metaSortKey": -1622380235533.125,
       "_type": "request_group"
     },
     {
