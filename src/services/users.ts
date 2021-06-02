@@ -50,7 +50,11 @@ export class UsersService {
     sort: SortObject | undefined
   ): Promise<PaginateResult<IUserDocument>> {
     if (sort && !(sort['name'] || sort['email'] || sort['createdAt'])) {
-      sort = undefined
+      throw new UserError(
+        `Sort field is invalid`,
+        UserStatusCodes.NotFound,
+        'RECORD_NOTFOUND'
+      )
     }
 
     const query: any = { ...filter }
@@ -65,16 +69,9 @@ export class UsersService {
     return User.paginate(query, { limit, page, sort })
   }
 
+  // eslint-disable-next-line
   public async edit(account: string, _id: string, data: any): Promise<User> {
     const user = await User.findOne({ account, _id })
-
-    if (!user) {
-      throw new UserError(
-        `Record not found with id: ${_id}`,
-        UserStatusCodes.NotFound,
-        'RECORD_NOTFOUND'
-      )
-    }
 
     Object.assign(user, data)
 
