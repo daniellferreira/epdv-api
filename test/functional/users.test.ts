@@ -393,7 +393,7 @@ describe('Users functional tests', () => {
       })
     })
 
-    it('should find three created users, separete them into two pages and sort name,asc', async () => {
+    it('should find three created users, separete them into two pages and sort by name,asc', async () => {
       let user1 = {
         name: 'Jane Doe2',
         email: 'john@mail.com',
@@ -457,6 +457,166 @@ describe('Users functional tests', () => {
         totalPages: 3,
       })
     })
+
+    it('should find three created users and sort by email,asc', async () => {
+      let user1 = {
+        name: 'Jane Doe2',
+        email: 'jane+2@mail.com',
+        password: 'test123456',
+      }
+
+      let user2 = {
+        name: 'Jane Doe1',
+        email: 'jane+1@mail.com',
+        password: 'test123456',
+      }
+
+      let user3 = {
+        name: 'Jane Doe3',
+        email: 'jane+3@mail.com',
+        password: 'test123456',
+      }
+
+      const respUser1 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user1)
+      user1 = respUser1.body
+
+      const respUser2 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user2)
+      user2 = respUser2.body
+
+      const respUser3 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user3)
+      user3 = respUser3.body
+
+      const response = await global.testRequest
+        .get('/users/?sort=email,asc')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({
+        docs: [userMaster, user2, user1, user3],
+        hasNextPage: false,
+        hasPrevPage: false,
+        limit: 10,
+        nextPage: null,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 4,
+        totalPages: 1,
+      })
+    })
+
+    it('should find three created users and sort by createdAt,asc', async () => {
+      let user1 = {
+        name: 'Jane Doe2',
+        email: 'jane+2@mail.com',
+        password: 'test123456',
+      }
+
+      let user2 = {
+        name: 'Jane Doe1',
+        email: 'jane+1@mail.com',
+        password: 'test123456',
+      }
+
+      let user3 = {
+        name: 'Jane Doe3',
+        email: 'jane+3@mail.com',
+        password: 'test123456',
+      }
+
+      const respUser1 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user1)
+      user1 = respUser1.body
+
+      const respUser2 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user2)
+      user2 = respUser2.body
+
+      const respUser3 = await global.testRequest
+        .post('/users')
+        .set({
+          'x-access-token': token,
+        })
+        .send(user3)
+      user3 = respUser3.body
+
+      const response = await global.testRequest
+        .get('/users/?sort=createdAt,asc')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({
+        docs: [userMaster, user1, user2, user3],
+        hasNextPage: false,
+        hasPrevPage: false,
+        limit: 10,
+        nextPage: null,
+        page: 1,
+        pagingCounter: 1,
+        prevPage: null,
+        totalDocs: 4,
+        totalPages: 1,
+      })
+    })
+
+    it('should not list with invalid sort', async () => {
+      const responseList = await global.testRequest
+        .get('/users/?sort=abc,asc')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(responseList.status).toBe(404)
+      expect(responseList.body).toEqual({
+        cause: 'RECORD_NOTFOUND',
+        message: 'Sort field is invalid',
+      })
+    })
+
+    it('should not list user with invalid filter', async () => {
+      const responseList = await global.testRequest
+        .get('/users/?active=abc&limit=1&page=1&sort=name,asc')
+        .set({
+          'x-access-token': token,
+        })
+        .send()
+
+      expect(responseList.status).toBe(404)
+      expect(responseList.body).toEqual({
+        cause: 'RECORD_NOTFOUND',
+        message: 'Record not found with active: abc',
+      })
+    })
   })
 
   describe('When editing the users', () => {
@@ -485,6 +645,21 @@ describe('Users functional tests', () => {
         ...responseCreate.body,
         name: 'Jane Doe',
         updatedAt: responseEdit.body.updatedAt,
+      })
+    })
+
+    it('should not edit invalid user', async () => {
+      const responseEdit = await global.testRequest
+        .put(`/users/123`)
+        .set({
+          'x-access-token': token,
+        })
+        .send({ name: 'John' })
+
+      expect(responseEdit.status).toBe(404)
+      expect(responseEdit.body).toEqual({
+        cause: 'RECORD_NOTFOUND',
+        message: `Record not found with id: 123`,
       })
     })
 
