@@ -34,6 +34,7 @@ describe('Auth unit tests', () => {
       price: 1200.34,
       quantity: 20,
       account: userTestGet.account,
+      currency: 'BRL',
     })
 
     const getProductService = await productService.get(
@@ -51,6 +52,7 @@ describe('Auth unit tests', () => {
       price: 1200.34,
       quantity: 15,
       account: userTestGet.account,
+      currency: 'BRL',
     })
 
     await productService.create({
@@ -59,6 +61,7 @@ describe('Auth unit tests', () => {
       price: 5000.34,
       quantity: 10,
       account: userTestGet.account,
+      currency: 'BRL',
     })
 
     const createdListService = await productService.list(
@@ -77,6 +80,7 @@ describe('Auth unit tests', () => {
       price: 10000.34,
       quantity: 1,
       account: userTestGet.account,
+      currency: 'BRL',
     })
 
     const createdProductService = await productService.edit(
