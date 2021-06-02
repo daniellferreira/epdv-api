@@ -1,6 +1,9 @@
 import mongoose, { Document, model, PaginateModel, Schema } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
+const currencies = ['BRL'] as const
+type PriceCurrency = typeof currencies[number]
+
 export interface Product {
   readonly id?: string
   sku: string
@@ -9,6 +12,7 @@ export interface Product {
   categories?: string[]
   oldPrice?: number
   price: number
+  currency: PriceCurrency
   active?: boolean
   quantity: number
   description?: string
@@ -28,6 +32,7 @@ const schema = new mongoose.Schema(
     categories: { type: [String], default: [] },
     oldPrice: { type: Number, min: 0.0, default: 0.0 },
     price: { type: Number, required: true, min: 0.0 },
+    currency: { type: String, enum: currencies, default: 'BRL' },
     quantity: { type: Number, required: true, min: 0 },
     description: { type: String, default: null },
     especifications: { type: Schema.Types.Mixed, default: null }, // objeto contendo as especificacoes
