@@ -54,9 +54,8 @@ export class CheckoutService {
         account_id: account.toString(),
       },
       mode: 'payment',
+      locale: 'pt-BR',
     }
-
-    console.log('Stripe Payment:', util.inspect(params, false, null, true))
 
     return this.client.create(params)
   }
