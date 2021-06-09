@@ -60,18 +60,30 @@ export class ProductController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { limit, page, sort, active } = req.query
-      const filter: ProductsListFilter = { account: req.decoded?.user.account }
+      const { limit, page, sort, active, id, toPaginate = 'true' } = req.query
+
+      const filter: ProductsListFilter = {
+        account: req.decoded?.user.account,
+        id,
+      }
 
       if (active != null) {
         filter.active = active
+      }
+
+      let paginate
+      if (toPaginate == 'true') {
+        paginate = true
+      } else {
+        paginate = false
       }
 
       const products = await this.service.list(
         filter,
         limit,
         page,
-        stringToSort(sort)
+        stringToSort(sort),
+        paginate
       )
 
       res.status(200).send(products)

@@ -29,7 +29,7 @@ export class ProductsService {
     return product
   }
 
-  public list(
+  public async list(
     filter: ProductsListFilter,
     limit = 10,
     page = 1,
@@ -54,6 +54,24 @@ export class ProductsService {
       }
 
       delete query.id
+    }
+
+    if (query._id) {
+      query.active = false
+      const listInactive = Product.paginate(query, {
+        limit,
+        page,
+        sort,
+        pagination: toPaginate,
+      })
+
+      const productsInactive = (await listInactive).docs
+      if (productsInactive.length > 0) {
+        throw new UserError(
+          `Produto ${productsInactive[0].name} não está mais disponível, favor ajustar o carrinho para prosseguir!`
+        )
+      }
+      query.active = true
     }
 
     return Product.paginate(query, {
