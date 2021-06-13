@@ -29,7 +29,7 @@ export class ProductsService {
     return product
   }
 
-  public list(
+  public async list(
     filter: ProductsListFilter,
     limit = 10,
     page = 1,

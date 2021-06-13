@@ -60,8 +60,15 @@ export class ProductController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { limit, page, sort, active } = req.query
-      const filter: ProductsListFilter = { account: req.decoded?.user.account }
+      const { limit, page, sort, active, id, toPaginate = 'true' } = req.query
+
+      const filter: ProductsListFilter = {
+        account: req.decoded?.user.account,
+      }
+
+      if (id != '') {
+        filter.id = id
+      }
 
       if (active != null) {
         filter.active = active
@@ -71,7 +78,8 @@ export class ProductController {
         filter,
         limit,
         page,
-        stringToSort(sort)
+        stringToSort(sort),
+        toPaginate === 'true'
       )
 
       res.status(200).send(products)
