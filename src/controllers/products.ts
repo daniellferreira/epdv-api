@@ -64,18 +64,14 @@ export class ProductController {
 
       const filter: ProductsListFilter = {
         account: req.decoded?.user.account,
-        id,
+      }
+
+      if (id != '') {
+        filter.id = id
       }
 
       if (active != null) {
         filter.active = active
-      }
-
-      let paginate
-      if (toPaginate == 'true') {
-        paginate = true
-      } else {
-        paginate = false
       }
 
       const products = await this.service.list(
@@ -83,7 +79,7 @@ export class ProductController {
         limit,
         page,
         stringToSort(sort),
-        paginate
+        toPaginate === 'true'
       )
 
       res.status(200).send(products)
