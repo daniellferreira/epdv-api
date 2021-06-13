@@ -15,7 +15,13 @@ export const validateCartItems = (
 
     if (cartItem.quantity > inventoryItem.quantity) {
       throw new Error(
-        `Product ${cartItem.id} quantity is greater than in inventory!`
+        `Produto ${inventoryItem.name} não possui estoque suficiente (estoque atual: ${inventoryItem.quantity}), favor ajustar o carrinho para prosseguir!`
+      )
+    }
+
+    if (!inventoryItem.active) {
+      throw new Error(
+        `Produto ${inventoryItem.name} não está mais disponível, favor ajustar o carrinho para prosseguir!`
       )
     }
 

@@ -4,6 +4,8 @@ export interface ReqListQuery {
   limit: number
   sort: string
   active: boolean
+  id?: string
+  toPaginate?: boolean
 }
 
 export interface SortObject {
