@@ -53,7 +53,7 @@ describe('Auth functional tests', () => {
       expect(response.status).toBe(404)
       expect(response.body).toEqual({
         cause: 'RECORD_NOTFOUND',
-        message: `Record not found with email: ${myEmail}`,
+        message: `Record not found or inative with email: ${myEmail}`,
       })
     })
 

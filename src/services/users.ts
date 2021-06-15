@@ -29,11 +29,11 @@ export class UsersService {
   }
 
   public async getByEmail(email: string): Promise<User> {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email, active: true })
 
     if (!user) {
       throw new UserError(
-        `Record not found with email: ${email}`,
+        `Record not found or inative with email: ${email}`,
         UserStatusCodes.NotFound,
         'RECORD_NOTFOUND'
       )
@@ -42,7 +42,7 @@ export class UsersService {
     return user
   }
 
-  public async list(
+  public list(
     filter: UsersListFilter,
     search: string,
     limit = 10,
