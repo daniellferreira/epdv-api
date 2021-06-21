@@ -26,7 +26,7 @@ const schema = new mongoose.Schema(
     email: { type: String, required: true },
     active: { type: Boolean, default: true },
     password: { type: String, required: true },
-    isAdmin: { type: String, required: true, default: false },
+    isAdmin: { type: Boolean, required: true, default: false },
     account: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
   },
   {
