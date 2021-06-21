@@ -74,14 +74,14 @@ export class UsersService {
     if (
       data.active === false ||
       data.active === 'false' ||
-      data.isAdmin == false ||
-      data.isAdmin == 'false'
+      (data.scope !== 'admin' && data.scope !== undefined)
     ) {
       const users_active = await User.find({
         account,
         active: true,
-        isAdmin: true,
+        scope: 'admin',
       })
+
       if (users_active.length <= 1 && users_active[0]._id == _id) {
         throw new UserError(
           `Unable to disable all administrators`,
