@@ -71,6 +71,16 @@ export class UsersService {
 
   // eslint-disable-next-line
   public async edit(account: string, _id: string, data: any): Promise<User> {
+    if (data.active === false || data.active === 'false') {
+      const users_active = await User.find({ account, active: true })
+      if (users_active.length <= 1 && users_active[0]._id == _id) {
+        throw new UserError(
+          `Unable to disable all users`,
+          UserStatusCodes.Unauthorized,
+          'UNAUTHORIZED'
+        )
+      }
+    }
     const user = await User.findOne({ account, _id })
 
     Object.assign(user, data)
