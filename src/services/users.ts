@@ -74,12 +74,12 @@ export class UsersService {
     if (
       data.active === false ||
       data.active === 'false' ||
-      (data.scope !== 'admin' && data.scope !== undefined)
+      (!data.scope?.includes('admin') && data.scope !== undefined)
     ) {
       const users_active = await User.find({
         account,
         active: true,
-        scope: 'admin',
+        scope: { $in: ['admin'] },
       })
 
       if (users_active.length <= 1 && users_active[0]._id == _id) {
