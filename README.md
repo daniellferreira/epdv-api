@@ -1,5 +1,10 @@
 # e-PDV API (v1)
 
+## Tecnologias:
+- Node.js v14 + TypeScript
+- MongoDB + Atlas Cloud
+- Heroku + GitHub Actions (CI/CD): https://epdv-api.herokuapp.com/
+
 ## Execução:
 
 Para executar a API em modo de **desenvolvimento** você deve executar o seguinte comando:
